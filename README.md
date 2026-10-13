@@ -1,106 +1,59 @@
 # Arena Showdown
 
-Núcleo modular de competições para Paper 1.21.11. A Entrega 2 permite executar campeonatos individuais ou por equipes com minigames simulados; mapas e minigames reais continuam fora do escopo.
+Plataforma modular de campeonatos para Paper 1.21.11 e Java 21. O repositório contém o `ArenaCore`, a API pública e o primeiro minigame jogável, `ArenaParkour`.
 
-## Requisitos e build
-
-- Windows 10/11 x64
-- JDK 21; o ambiente local usa Temurin em `.tools/jdk-21`
-- Paper 1.21.11 build 132 em `server/paper-1.21.11-132.jar`
+## Build e instalação
 
 ```powershell
-.\scripts\build.ps1
-```
-
-O artefato final é `arena-core/build/libs/ArenaCore-0.2.0-SNAPSHOT.jar`. Gradle é fornecido pelo Wrapper.
-
-## Execução local
-
-```powershell
+$env:JAVA_HOME=(Resolve-Path '.tools\jdk-21').Path
+.\gradlew.bat clean build --no-parallel
 Copy-Item arena-core\build\libs\ArenaCore-0.2.0-SNAPSHOT.jar server\plugins\ArenaCore.jar -Force
+Copy-Item arena-parkour\build\libs\ArenaParkour-0.3.0-SNAPSHOT.jar server\plugins\ArenaParkour.jar -Force
 .\scripts\start-server.ps1
 ```
 
-Em outro PowerShell, encerre com `./scripts/stop-server.ps1`. O servidor principal escuta somente em `127.0.0.1:25565`.
+O ArenaCore cria `plugins/ArenaCore/arena.db` automaticamente e mantém a pontuação centralizada no SQLite. O ArenaParkour não acessa o banco.
 
-## Arquitetura
+## Módulos
 
-- `arena-api`: contratos públicos, modelos de campeonato/partida e `MinigameAdapter`.
-- `ArenaService`: API anterior de inscrição, pontos por event-id e ranking; permanece compatível.
-- `ChampionshipManager`: modo individual/equipes, sequência de jogos, pausa, retomada, campeão e histórico.
-- `MatchManager`: calendário, máquina de estados, conexões e submissão idempotente de resultados.
-- `ArenaRepository` e `OrchestrationRepository`: isolam toda persistência da lógica e dos minigames.
-- `JdbcArenaRepository` e `JdbcOrchestrationRepository`: implementação SQLite atual.
-- `PlayerSessionManager`: snapshots temporários de inventário, localização, modo, vida e alimentação, sempre na thread principal.
+- `arena-api`: contratos públicos, incluindo `MinigameAdapter` e `OrchestrationApi`.
+- `arena-core`: campeonatos, partidas, ranking, pontuação idempotente, SQLite e comandos `/arena`.
+- `arena-parkour`: arenas YAML, corrida, checkpoints, timeout, scoreboard e resultados automáticos.
 
-Plugins de minigame obtêm `ArenaApi` e `OrchestrationApi` pelo `ServicesManager` do Bukkit. Eles implementam `MinigameAdapter` com `prepare`, `start`, `finish`, `cancel`, `reset`, `getResult` e `getParticipants`; não recebem acesso ao banco.
+## Fluxo rápido do Parkour
 
-## Estados
+Entre como operador e gere a pista isolada:
 
-Campeonato:
+```text
+/parkour buildtest parkour-test
+/parkour validate parkour-test
+```
 
-`WAITING → PREPARING → RUNNING ⇄ PAUSED → FINISHED`
+Crie o campeonato e cadastre jogadores conectados:
 
-Partida:
+```text
+/arena champ create copa01 individual parkour Copa Arena Showdown
+/arena register copa01 JogadorUm
+/arena register copa01 JogadorDois
+/arena next copa01
+/arena ranking copa01
+```
 
-`WAITING → PREPARING → COUNTDOWN → RUNNING → FINISHED`
+O `/arena next` valida o adaptador, a arena, participantes e duplicidade antes de criar a rodada. A pista controla preparação, contagem de cinco segundos, corrida e envio do resultado ao ArenaCore.
 
-Campeonatos e partidas ativos também podem ser cancelados conforme as transições validadas no código.
+## Comandos novos
 
-## Comandos principais
+- `/arena register <campeonato> <nickname>`; a forma antiga com UUID continua válida.
+- `/arena team assign <campeonato> <nickname-ou-uuid> <equipe>`.
+- `/arena next <campeonato>` prepara a próxima rodada sem duplicá-la.
+- `/arena status <campeonato>` mostra estado, rodada, próximo jogo, participantes, partida ativa e ranking.
+- `/parkour help` lista os comandos de configuração.
 
-Compatibilidade anterior:
+Consulte [docs/PARKOUR-GUIA.md](docs/PARKOUR-GUIA.md) e [docs/TEST-REPORT.md](docs/TEST-REPORT.md).
 
-- `/arena create <id> <nome>`
-- `/arena prepare|start|pause|resume|finish|cancel <id>`
-- `/arena join <campeonato> [equipe]`
-- `/arena score <campeonato> <jogador-ou-uuid> <pontos> <origem> <event-id>`
-- `/arena ranking <campeonato>`
+## Limitações
 
-Campeonatos e equipes:
-
-- `/arena champ create <id> <individual|teams> <gamesCSV> <nome>`
-- `/arena champ details <id>`
-- `/arena register <campeonato> <uuid> <nome> [equipe]`
-- `/arena team create <campeonato> <id> <nome>`
-- `/arena team assign <campeonato> <uuid> <equipe>`
-- `/arena team ranking <campeonato>`
-
-Partidas:
-
-- `/arena match create <id> <campeonato> <rodada> <minigame> <arena> <uuidCSV>`
-- `/arena match prepare|countdown|start <id>`
-- `/arena match finish <id> <result-id> <uuid:pontos[:equipe],...>`
-- `/arena match cancel <id> [motivo]`
-- `/arena match status <id>`
-- `/arena match list <campeonato>`
-- `/arena match restart <partida-antiga> <nova-partida>`
-- `/arena match abandon <id> <uuid>`
-
-Administração exige `arena.admin`; permissões-filhas documentam campeonato, equipes, partidas e pontuação. Jogadores usam `arena.play`.
-
-## Pontuação e desempate
-
-`plugins/ArenaCore/scoring.yml` define pontos globais e específicos por minigame. Por padrão, o ArenaCore ignora pontos enviados pelo adaptador e recalcula pelo posicionamento. `use-result-points: true` permite resultados personalizados.
-
-Desempates disponíveis: `MOST_WINS`, `BEST_LAST_ROUND`, `EARLIEST_REGISTRATION` e `NAME`. O padrão é `MOST_WINS`.
-
-A finalização oficial é uma única transação: grava resultado, entradas, pontuação individual/equipe, duração, rodada atual e auditoria. IDs de resultado e eventos `match:<id>:...` impedem reaplicação após repetição ou reinício.
-
-## SQLite, YAML e backups
-
-O banco `plugins/ArenaCore/arena.db` é criado/migrado automaticamente. SQLite usa WAL, foreign keys e timeout de concorrência. Operações de banco e backup são assíncronas.
-
-- `config.yml`: banco, ranking e retenção de backups.
-- `minigames.yml`: ativação e opções futuras dos jogos.
-- `scoring.yml`: pontuação e desempate.
-
-Cada inicialização cria um snapshot consistente com `VACUUM INTO`, valida `PRAGMA integrity_check` e conserva as cópias configuradas.
-
-## Limitações atuais
-
-- Snapshots de inventário/localização são mantidos em memória; uma queda abrupta durante partida exige recuperação operacional manual.
-- Não existe temporizador automático para converter desconexão em abandono; partidas sem reconexão marcam abandono imediato e há comando administrativo.
-- O retorno provisório usa o spawn do mundo atual, não um lobby visual definitivo.
-- Não há mapas, painel web, Velocity ou minigames completos.
-- A instância de teste não teve clientes Minecraft reais conectados; eventos de conexão foram cobertos na camada de orquestração.
+- A corrida completa ainda precisa ser validada manualmente com dois clientes Minecraft reais.
+- O gerador da pista roda apenas por `/parkour buildtest` e nunca altera o `cassino-lobby`.
+- Desconexão durante a corrida cancela a partida; retomada no mesmo ponto ainda não é oferecida.
+- O retorno usa o snapshot persistido da localização original, não um lobby visual definitivo.

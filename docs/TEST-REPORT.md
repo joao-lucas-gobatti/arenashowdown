@@ -71,3 +71,29 @@ Data: 13/10/2026.
 - Nenhum jogador Minecraft real conectou ao servidor de teste; snapshots Bukkit de inventário/localização e eventos `PlayerJoin/PlayerQuit` não foram exercitados end-to-end.
 - Nenhum minigame externo real registrou `MinigameAdapter`; o contrato foi validado com implementação simulada.
 - O retorno provisório ao lobby usa o spawn do mundo atual.
+
+## Entrega 3 — ArenaParkour
+
+Data: 13/10/2026.
+
+### Testes automatizados
+
+- Build completo com Temurin 21.0.12.1 e Gradle 9.2.1.
+- Todos os testes anteriores do ArenaCore permaneceram aprovados.
+- Seis testes do ArenaParkour aprovados: validação de arena, região 3D, checkpoints sequenciais, bloqueio de chegada antecipada, classificação, empate e timeout.
+- A idempotência de resultados continua coberta pelos testes de integração do ArenaCore.
+
+### Boot real isolado
+
+- Paper 1.21.11 build 132 iniciado em `127.0.0.1:25567`, em `server-test-delivery3`.
+- ArenaCore 0.2.0-SNAPSHOT e ArenaParkour 0.3.0-SNAPSHOT foram habilitados juntos.
+- O primeiro boot revelou uma cópia da API duplicada no JAR; o empacotamento foi corrigido para `compileOnly`, e o segundo boot confirmou o adaptador.
+- `/plugins` mostrou os dois plugins ativos; `/arena help` confirmou os novos comandos.
+- SQLite e backup iniciaram normalmente; o desligamento foi limpo.
+- O servidor principal na porta 25565 e os mundos `cassino_lobby` não foram alterados nem encerrados.
+
+### Não validado
+
+- Não houve dois clientes reais conectados; teleporte, scoreboard, sons, partículas e corrida completa precisam de teste manual.
+- `buildtest` e seleção de regiões exigem jogador e não foram executados pelo console.
+- A recuperação persistente de snapshot foi implementada, mas uma queda abrupta com cliente real ainda não foi reproduzida.

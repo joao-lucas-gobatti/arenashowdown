@@ -17,4 +17,6 @@ public final class ArenaOrchestrationService implements OrchestrationApi {
     @Override public CompletableFuture<Boolean> submitResult(String matchId,MatchResult result,String actor){return matches.finish(matchId,result,actor);}
     @Override public CompletableFuture<ArenaMatch> match(String id){return matches.match(id);}
     @Override public CompletableFuture<List<ArenaMatch>> calendar(String championshipId){return matches.calendar(championshipId);}
+    @Override public CompletableFuture<ChampionshipDetails> championship(String id){return matches.championship(id);}
+    @Override public CompletableFuture<List<ParticipantInfo>> participants(String id){return matches.participants(id);}
 }

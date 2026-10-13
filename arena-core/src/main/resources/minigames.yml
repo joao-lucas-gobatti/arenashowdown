@@ -9,7 +9,8 @@ minigames:
   desafio-de-sorte:
     enabled: false
   parkour:
-    enabled: false
+    enabled: true
+    arena: parkour-test
   roube-a-bandeira:
     enabled: false
   csgo:

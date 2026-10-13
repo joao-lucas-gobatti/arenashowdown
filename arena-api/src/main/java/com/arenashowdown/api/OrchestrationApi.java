@@ -15,4 +15,6 @@ public interface OrchestrationApi {
     CompletableFuture<Boolean> submitResult(String matchId,MatchResult result,String actor);
     CompletableFuture<ArenaMatch> match(String id);
     CompletableFuture<List<ArenaMatch>> calendar(String championshipId);
+    CompletableFuture<ChampionshipDetails> championship(String id);
+    CompletableFuture<List<ParticipantInfo>> participants(String championshipId);
 }

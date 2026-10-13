@@ -19,6 +19,7 @@ public interface OrchestrationRepository {
     boolean updateMatchState(String id, MatchState expected, MatchState next, Instant startedAt, String reason) throws SQLException;
     void updateParticipantStatus(String matchId, UUID playerId, ParticipantStatus status, Instant disconnectedAt) throws SQLException;
     Optional<ParticipantStatus> participantStatus(String matchId, UUID playerId) throws SQLException;
+    List<ParticipantInfo> participants(String championshipId) throws SQLException;
     boolean finalizeMatch(MatchResult result, String actor) throws SQLException;
     List<TeamRankingEntry> teamRanking(String championshipId, int limit) throws SQLException;
     void audit(String championshipId, String actor, String action, String details) throws SQLException;

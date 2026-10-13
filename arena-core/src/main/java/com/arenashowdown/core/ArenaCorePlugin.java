@@ -8,6 +8,7 @@ import com.arenashowdown.core.player.*;
 import com.arenashowdown.core.service.*;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.YamlConfiguration;
 import java.nio.file.Path;
 import java.util.concurrent.*;
 
@@ -38,7 +39,8 @@ public final class ArenaCorePlugin extends JavaPlugin {
             getServer().getServicesManager().register(OrchestrationApi.class, orchestrationApi, this, ServicePriority.Normal);
             PlayerSessionManager sessions = new PlayerSessionManager();
             getServer().getPluginManager().registerEvents(new ParticipantListener(this, matchManager), this);
-            ArenaCommand command = new ArenaCommand(this, service, championshipManager, matchManager, sessions, getConfig().getInt("ranking.default-limit", 10));
+            var minigames = YamlConfiguration.loadConfiguration(getDataFolder().toPath().resolve("minigames.yml").toFile());
+            ArenaCommand command = new ArenaCommand(this, service, championshipManager, matchManager, sessions, minigames, getConfig().getInt("ranking.default-limit", 10));
             var pluginCommand = getCommand("arena");
             if (pluginCommand == null) throw new IllegalStateException("Comando arena ausente do plugin.yml");
             pluginCommand.setExecutor(command);
