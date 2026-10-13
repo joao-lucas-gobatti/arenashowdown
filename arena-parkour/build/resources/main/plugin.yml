@@ -1,0 +1,21 @@
+name: ArenaParkour
+version: '0.3.0-SNAPSHOT'
+main: com.arenashowdown.parkour.ArenaParkourPlugin
+api-version: '1.21.11'
+depend: [ArenaCore]
+authors: [Arena Showdown]
+description: Parkour competitivo integrado ao ArenaCore
+commands:
+  wonder:
+    description: House of Wonders V3 — geração, treino e inspeção
+    usage: /wonder hub
+  palace:
+    description: The Grand Dice Parkour Palace — treino e geração
+    usage: /palace hub
+  parkour:
+    description: Configura e testa arenas de Parkour
+    usage: /parkour help
+permissions:
+  arena.parkour.admin:
+    default: op
+    description: Configura arenas de Parkour

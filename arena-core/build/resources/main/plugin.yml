@@ -1,0 +1,30 @@
+name: ArenaCore
+version: '0.2.0-SNAPSHOT'
+main: com.arenashowdown.core.ArenaCorePlugin
+api-version: '1.21.11'
+authors: [Arena Showdown]
+description: Núcleo de campeonatos e pontuação do Arena Showdown
+commands:
+  arena:
+    description: Administração e consulta do Arena Showdown
+    usage: /arena help
+permissions:
+  arena.admin:
+    description: Gerencia campeonatos e pontuação
+    default: op
+    children:
+      arena.admin.championship: true
+      arena.admin.match: true
+      arena.admin.team: true
+      arena.admin.score: true
+  arena.admin.championship:
+    default: op
+  arena.admin.match:
+    default: op
+  arena.admin.team:
+    default: op
+  arena.admin.score:
+    default: op
+  arena.play:
+    description: Participa e consulta campeonatos
+    default: true

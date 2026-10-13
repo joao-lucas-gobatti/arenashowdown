@@ -1,0 +1,263 @@
+name: palace-impossible
+world: grand_dice_palace
+start:
+  world: grand_dice_palace
+  x: 0.5
+  y: 71.0
+  z: 30.5
+  yaw: 0.0
+  pitch: 0.0
+spawns:
+  '0':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: 29.5
+    yaw: 0.0
+    pitch: 0.0
+  '1':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: 30.5
+    yaw: 0.0
+    pitch: 0.0
+  '2':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: 31.5
+    yaw: 0.0
+    pitch: 0.0
+  '3':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: 29.5
+    yaw: 0.0
+    pitch: 0.0
+  '4':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: 30.5
+    yaw: 0.0
+    pitch: 0.0
+  '5':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: 31.5
+    yaw: 0.0
+    pitch: 0.0
+  '6':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: 29.5
+    yaw: 0.0
+    pitch: 0.0
+  '7':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: 30.5
+    yaw: 0.0
+    pitch: 0.0
+  '8':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: 31.5
+    yaw: 0.0
+    pitch: 0.0
+checkpoints:
+  '0':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 71
+    min-z: 34
+    max-x: 0
+    max-y: 71
+    max-z: 34
+  '1':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: 38
+    max-x: -1
+    max-y: 72
+    max-z: 38
+  '2':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 71
+    min-z: 42
+    max-x: 0
+    max-y: 71
+    max-z: 42
+  '3':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: 46
+    max-x: -1
+    max-y: 72
+    max-z: 46
+  '4':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 71
+    min-z: 50
+    max-x: 0
+    max-y: 71
+    max-z: 50
+  '5':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: 54
+    max-x: -1
+    max-y: 72
+    max-z: 54
+  '6':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 73
+    min-z: 58
+    max-x: 0
+    max-y: 73
+    max-z: 58
+  '7':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 73
+    min-z: 62
+    max-x: 0
+    max-y: 73
+    max-z: 62
+  '8':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: 66
+    max-x: -1
+    max-y: 74
+    max-z: 66
+  '9':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 73
+    min-z: 70
+    max-x: 0
+    max-y: 73
+    max-z: 70
+  '10':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: 74
+    max-x: -1
+    max-y: 74
+    max-z: 74
+  '11':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 73
+    min-z: 78
+    max-x: 0
+    max-y: 73
+    max-z: 78
+  '12':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: 82
+    max-x: -1
+    max-y: 74
+    max-z: 82
+  '13':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 75
+    min-z: 86
+    max-x: 0
+    max-y: 75
+    max-z: 86
+  '14':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 75
+    min-z: 90
+    max-x: 0
+    max-y: 75
+    max-z: 90
+  '15':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: 94
+    max-x: -1
+    max-y: 76
+    max-z: 94
+  '16':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 75
+    min-z: 98
+    max-x: 0
+    max-y: 75
+    max-z: 98
+  '17':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: 102
+    max-x: -1
+    max-y: 76
+    max-z: 102
+  '18':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 75
+    min-z: 106
+    max-x: 0
+    max-y: 75
+    max-z: 106
+  '19':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: 110
+    max-x: -1
+    max-y: 76
+    max-z: 110
+  '20':
+    world: grand_dice_palace
+    min-x: 0
+    min-y: 77
+    min-z: 114
+    max-x: 0
+    max-y: 77
+    max-z: 114
+finish:
+  world: grand_dice_palace
+  min-x: 0
+  min-y: 77
+  min-z: 114
+  max-x: 0
+  max-y: 77
+  max-z: 114
+lobby:
+  world: grand_dice_palace
+  x: 0.5
+  y: 71.0
+  z: 0.5
+  yaw: 180.0
+  pitch: 0.0
+time-limit-seconds: 900
+fall-height: 68.0
+rules:
+  stages: 3
+  difficulty: IMPOSSIBLE
+  palace: true

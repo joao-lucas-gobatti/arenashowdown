@@ -1,0 +1,1105 @@
+name: wonder-easy
+world: house_of_wonders_v3
+start:
+  world: house_of_wonders_v3
+  x: -19.5
+  y: 69.0
+  z: -47.5
+  yaw: 180.0
+  pitch: 0.0
+spawns:
+  '0':
+    world: house_of_wonders_v3
+    x: -20.5
+    y: 69.0
+    z: -46.5
+    yaw: 180.0
+    pitch: 0.0
+  '1':
+    world: house_of_wonders_v3
+    x: -20.5
+    y: 69.0
+    z: -47.5
+    yaw: 180.0
+    pitch: 0.0
+  '2':
+    world: house_of_wonders_v3
+    x: -20.5
+    y: 69.0
+    z: -48.5
+    yaw: 180.0
+    pitch: 0.0
+  '3':
+    world: house_of_wonders_v3
+    x: -19.5
+    y: 69.0
+    z: -46.5
+    yaw: 180.0
+    pitch: 0.0
+  '4':
+    world: house_of_wonders_v3
+    x: -19.5
+    y: 69.0
+    z: -47.5
+    yaw: 180.0
+    pitch: 0.0
+  '5':
+    world: house_of_wonders_v3
+    x: -19.5
+    y: 69.0
+    z: -48.5
+    yaw: 180.0
+    pitch: 0.0
+  '6':
+    world: house_of_wonders_v3
+    x: -18.5
+    y: 69.0
+    z: -46.5
+    yaw: 180.0
+    pitch: 0.0
+  '7':
+    world: house_of_wonders_v3
+    x: -18.5
+    y: 69.0
+    z: -47.5
+    yaw: 180.0
+    pitch: 0.0
+  '8':
+    world: house_of_wonders_v3
+    x: -18.5
+    y: 69.0
+    z: -48.5
+    yaw: 180.0
+    pitch: 0.0
+checkpoints:
+  '0':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 69
+    min-z: -53
+    max-x: -14
+    max-y: 69
+    max-z: -51
+  '1':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 69
+    min-z: -53
+    max-x: -9
+    max-y: 69
+    max-z: -51
+  '2':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 70
+    min-z: -53
+    max-x: -4
+    max-y: 70
+    max-z: -51
+  '3':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 69
+    min-z: -53
+    max-x: 1
+    max-y: 69
+    max-z: -51
+  '4':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 69
+    min-z: -53
+    max-x: 6
+    max-y: 69
+    max-z: -51
+  '5':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 70
+    min-z: -53
+    max-x: 11
+    max-y: 70
+    max-z: -51
+  '6':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 69
+    min-z: -53
+    max-x: 16
+    max-y: 69
+    max-z: -51
+  '7':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 69
+    min-z: -58
+    max-x: 16
+    max-y: 69
+    max-z: -56
+  '8':
+    world: house_of_wonders_v3
+    min-x: 8
+    min-y: 69
+    min-z: -58
+    max-x: 11
+    max-y: 69
+    max-z: -55
+  '9':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 70
+    min-z: -58
+    max-x: 6
+    max-y: 70
+    max-z: -56
+  '10':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 69
+    min-z: -58
+    max-x: 1
+    max-y: 69
+    max-z: -56
+  '11':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 69
+    min-z: -58
+    max-x: -4
+    max-y: 69
+    max-z: -56
+  '12':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 70
+    min-z: -58
+    max-x: -9
+    max-y: 70
+    max-z: -56
+  '13':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 69
+    min-z: -58
+    max-x: -14
+    max-y: 69
+    max-z: -56
+  '14':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 70
+    min-z: -63
+    max-x: -14
+    max-y: 70
+    max-z: -61
+  '15':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 70
+    min-z: -63
+    max-x: -9
+    max-y: 70
+    max-z: -61
+  '16':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 71
+    min-z: -63
+    max-x: -4
+    max-y: 71
+    max-z: -61
+  '17':
+    world: house_of_wonders_v3
+    min-x: -2
+    min-y: 70
+    min-z: -63
+    max-x: 1
+    max-y: 70
+    max-z: -60
+  '18':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 70
+    min-z: -63
+    max-x: 6
+    max-y: 70
+    max-z: -61
+  '19':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 71
+    min-z: -63
+    max-x: 11
+    max-y: 71
+    max-z: -61
+  '20':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 70
+    min-z: -63
+    max-x: 16
+    max-y: 70
+    max-z: -61
+  '21':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 70
+    min-z: -68
+    max-x: 16
+    max-y: 70
+    max-z: -66
+  '22':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 70
+    min-z: -68
+    max-x: 11
+    max-y: 70
+    max-z: -66
+  '23':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 71
+    min-z: -68
+    max-x: 6
+    max-y: 71
+    max-z: -66
+  '24':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 70
+    min-z: -68
+    max-x: 1
+    max-y: 70
+    max-z: -66
+  '25':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 70
+    min-z: -68
+    max-x: -4
+    max-y: 70
+    max-z: -66
+  '26':
+    world: house_of_wonders_v3
+    min-x: -12
+    min-y: 71
+    min-z: -68
+    max-x: -9
+    max-y: 71
+    max-z: -65
+  '27':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 70
+    min-z: -68
+    max-x: -14
+    max-y: 70
+    max-z: -66
+  '28':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 71
+    min-z: -73
+    max-x: -14
+    max-y: 71
+    max-z: -71
+  '29':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 71
+    min-z: -73
+    max-x: -9
+    max-y: 71
+    max-z: -71
+  '30':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 72
+    min-z: -73
+    max-x: -4
+    max-y: 72
+    max-z: -71
+  '31':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 71
+    min-z: -73
+    max-x: 1
+    max-y: 71
+    max-z: -71
+  '32':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 71
+    min-z: -73
+    max-x: 6
+    max-y: 71
+    max-z: -71
+  '33':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 72
+    min-z: -73
+    max-x: 11
+    max-y: 72
+    max-z: -71
+  '34':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 71
+    min-z: -73
+    max-x: 16
+    max-y: 71
+    max-z: -71
+  '35':
+    world: house_of_wonders_v3
+    min-x: 13
+    min-y: 71
+    min-z: -78
+    max-x: 16
+    max-y: 71
+    max-z: -75
+  '36':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 71
+    min-z: -78
+    max-x: 11
+    max-y: 71
+    max-z: -76
+  '37':
+    world: house_of_wonders_v3
+    min-x: 4
+    min-y: 72
+    min-z: -78
+    max-x: 6
+    max-y: 72
+    max-z: -76
+  '38':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 71
+    min-z: -78
+    max-x: 1
+    max-y: 71
+    max-z: -76
+  '39':
+    world: house_of_wonders_v3
+    min-x: -6
+    min-y: 71
+    min-z: -78
+    max-x: -4
+    max-y: 71
+    max-z: -76
+  '40':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 72
+    min-z: -78
+    max-x: -9
+    max-y: 72
+    max-z: -76
+  '41':
+    world: house_of_wonders_v3
+    min-x: -16
+    min-y: 71
+    min-z: -78
+    max-x: -14
+    max-y: 71
+    max-z: -76
+  '42':
+    world: house_of_wonders_v3
+    min-x: 3
+    min-y: 105
+    min-z: -111
+    max-x: 5
+    max-y: 105
+    max-z: -109
+  '43':
+    world: house_of_wonders_v3
+    min-x: 6
+    min-y: 105
+    min-z: -112
+    max-x: 8
+    max-y: 105
+    max-z: -110
+  '44':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 105
+    min-z: -114
+    max-x: 11
+    max-y: 105
+    max-z: -112
+  '45':
+    world: house_of_wonders_v3
+    min-x: 12
+    min-y: 105
+    min-z: -117
+    max-x: 14
+    max-y: 105
+    max-z: -115
+  '46':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 105
+    min-z: -120
+    max-x: 16
+    max-y: 105
+    max-z: -118
+  '47':
+    world: house_of_wonders_v3
+    min-x: 15
+    min-y: 105
+    min-z: -123
+    max-x: 17
+    max-y: 105
+    max-z: -121
+  '48':
+    world: house_of_wonders_v3
+    min-x: 16
+    min-y: 106
+    min-z: -126
+    max-x: 18
+    max-y: 106
+    max-z: -124
+  '49':
+    world: house_of_wonders_v3
+    min-x: 16
+    min-y: 106
+    min-z: -130
+    max-x: 18
+    max-y: 106
+    max-z: -128
+  '50':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 106
+    min-z: -133
+    max-x: 17
+    max-y: 106
+    max-z: -130
+  '51':
+    world: house_of_wonders_v3
+    min-x: 14
+    min-y: 106
+    min-z: -136
+    max-x: 16
+    max-y: 106
+    max-z: -134
+  '52':
+    world: house_of_wonders_v3
+    min-x: 12
+    min-y: 106
+    min-z: -139
+    max-x: 14
+    max-y: 106
+    max-z: -137
+  '53':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 106
+    min-z: -142
+    max-x: 11
+    max-y: 106
+    max-z: -140
+  '54':
+    world: house_of_wonders_v3
+    min-x: 6
+    min-y: 106
+    min-z: -144
+    max-x: 8
+    max-y: 106
+    max-z: -142
+  '55':
+    world: house_of_wonders_v3
+    min-x: 3
+    min-y: 107
+    min-z: -147
+    max-x: 5
+    max-y: 107
+    max-z: -145
+  '56':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 107
+    min-z: -147
+    max-x: 1
+    max-y: 107
+    max-z: -145
+  '57':
+    world: house_of_wonders_v3
+    min-x: -5
+    min-y: 107
+    min-z: -147
+    max-x: -3
+    max-y: 107
+    max-z: -145
+  '58':
+    world: house_of_wonders_v3
+    min-x: -9
+    min-y: 107
+    min-z: -145
+    max-x: -7
+    max-y: 107
+    max-z: -143
+  '59':
+    world: house_of_wonders_v3
+    min-x: -13
+    min-y: 107
+    min-z: -143
+    max-x: -10
+    max-y: 107
+    max-z: -140
+  '60':
+    world: house_of_wonders_v3
+    min-x: -15
+    min-y: 107
+    min-z: -141
+    max-x: -13
+    max-y: 107
+    max-z: -139
+  '61':
+    world: house_of_wonders_v3
+    min-x: -17
+    min-y: 107
+    min-z: -137
+    max-x: -15
+    max-y: 107
+    max-z: -135
+  '62':
+    world: house_of_wonders_v3
+    min-x: -19
+    min-y: 108
+    min-z: -134
+    max-x: -17
+    max-y: 108
+    max-z: -132
+  '63':
+    world: house_of_wonders_v3
+    min-x: -20
+    min-y: 108
+    min-z: -130
+    max-x: -18
+    max-y: 108
+    max-z: -128
+  '64':
+    world: house_of_wonders_v3
+    min-x: -20
+    min-y: 108
+    min-z: -126
+    max-x: -18
+    max-y: 108
+    max-z: -124
+  '65':
+    world: house_of_wonders_v3
+    min-x: -19
+    min-y: 108
+    min-z: -122
+    max-x: -17
+    max-y: 108
+    max-z: -120
+  '66':
+    world: house_of_wonders_v3
+    min-x: -17
+    min-y: 108
+    min-z: -118
+    max-x: -15
+    max-y: 108
+    max-z: -116
+  '67':
+    world: house_of_wonders_v3
+    min-x: -15
+    min-y: 108
+    min-z: -115
+    max-x: -13
+    max-y: 108
+    max-z: -113
+  '68':
+    world: house_of_wonders_v3
+    min-x: -13
+    min-y: 108
+    min-z: -113
+    max-x: -10
+    max-y: 108
+    max-z: -110
+  '69':
+    world: house_of_wonders_v3
+    min-x: -10
+    min-y: 109
+    min-z: -109
+    max-x: -8
+    max-y: 109
+    max-z: -107
+  '70':
+    world: house_of_wonders_v3
+    min-x: -5
+    min-y: 109
+    min-z: -107
+    max-x: -3
+    max-y: 109
+    max-z: -105
+  '71':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 109
+    min-z: -107
+    max-x: 1
+    max-y: 109
+    max-z: -105
+  '72':
+    world: house_of_wonders_v3
+    min-x: 3
+    min-y: 109
+    min-z: -107
+    max-x: 5
+    max-y: 109
+    max-z: -105
+  '73':
+    world: house_of_wonders_v3
+    min-x: 8
+    min-y: 109
+    min-z: -109
+    max-x: 10
+    max-y: 109
+    max-z: -107
+  '74':
+    world: house_of_wonders_v3
+    min-x: 11
+    min-y: 109
+    min-z: -111
+    max-x: 13
+    max-y: 109
+    max-z: -109
+  '75':
+    world: house_of_wonders_v3
+    min-x: 15
+    min-y: 109
+    min-z: -114
+    max-x: 17
+    max-y: 109
+    max-z: -112
+  '76':
+    world: house_of_wonders_v3
+    min-x: 17
+    min-y: 110
+    min-z: -117
+    max-x: 19
+    max-y: 110
+    max-z: -115
+  '77':
+    world: house_of_wonders_v3
+    min-x: 18
+    min-y: 110
+    min-z: -122
+    max-x: 21
+    max-y: 110
+    max-z: -119
+  '78':
+    world: house_of_wonders_v3
+    min-x: 20
+    min-y: 110
+    min-z: -126
+    max-x: 22
+    max-y: 110
+    max-z: -124
+  '79':
+    world: house_of_wonders_v3
+    min-x: 20
+    min-y: 110
+    min-z: -130
+    max-x: 22
+    max-y: 110
+    max-z: -128
+  '80':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 110
+    min-z: -134
+    max-x: 21
+    max-y: 110
+    max-z: -132
+  '81':
+    world: house_of_wonders_v3
+    min-x: 17
+    min-y: 110
+    min-z: -139
+    max-x: 19
+    max-y: 110
+    max-z: -137
+  '82':
+    world: house_of_wonders_v3
+    min-x: 15
+    min-y: 110
+    min-z: -142
+    max-x: 17
+    max-y: 110
+    max-z: -140
+  '83':
+    world: house_of_wonders_v3
+    min-x: 13
+    min-y: 111
+    min-z: -147
+    max-x: 15
+    max-y: 111
+    max-z: -145
+  '84':
+    world: house_of_wonders_v3
+    min-x: -18
+    min-y: 70
+    min-z: -166
+    max-x: -17
+    max-y: 70
+    max-z: -165
+  '85':
+    world: house_of_wonders_v3
+    min-x: -14
+    min-y: 70
+    min-z: -166
+    max-x: -13
+    max-y: 70
+    max-z: -165
+  '86':
+    world: house_of_wonders_v3
+    min-x: -11
+    min-y: 70
+    min-z: -166
+    max-x: -10
+    max-y: 70
+    max-z: -165
+  '87':
+    world: house_of_wonders_v3
+    min-x: -8
+    min-y: 70
+    min-z: -166
+    max-x: -7
+    max-y: 70
+    max-z: -165
+  '88':
+    world: house_of_wonders_v3
+    min-x: -4
+    min-y: 70
+    min-z: -166
+    max-x: -3
+    max-y: 70
+    max-z: -165
+  '89':
+    world: house_of_wonders_v3
+    min-x: -1
+    min-y: 70
+    min-z: -166
+    max-x: 0
+    max-y: 70
+    max-z: -165
+  '90':
+    world: house_of_wonders_v3
+    min-x: 2
+    min-y: 70
+    min-z: -166
+    max-x: 3
+    max-y: 70
+    max-z: -165
+  '91':
+    world: house_of_wonders_v3
+    min-x: 6
+    min-y: 70
+    min-z: -166
+    max-x: 7
+    max-y: 70
+    max-z: -165
+  '92':
+    world: house_of_wonders_v3
+    min-x: 9
+    min-y: 70
+    min-z: -166
+    max-x: 10
+    max-y: 70
+    max-z: -165
+  '93':
+    world: house_of_wonders_v3
+    min-x: 12
+    min-y: 70
+    min-z: -166
+    max-x: 13
+    max-y: 70
+    max-z: -165
+  '94':
+    world: house_of_wonders_v3
+    min-x: 16
+    min-y: 70
+    min-z: -166
+    max-x: 17
+    max-y: 70
+    max-z: -165
+  '95':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 70
+    min-z: -166
+    max-x: 20
+    max-y: 70
+    max-z: -165
+  '96':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 70
+    min-z: -169
+    max-x: 20
+    max-y: 70
+    max-z: -168
+  '97':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -173
+    max-x: 20
+    max-y: 71
+    max-z: -172
+  '98':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -176
+    max-x: 20
+    max-y: 71
+    max-z: -175
+  '99':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -179
+    max-x: 20
+    max-y: 71
+    max-z: -178
+  '100':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -183
+    max-x: 20
+    max-y: 71
+    max-z: -182
+  '101':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -186
+    max-x: 20
+    max-y: 71
+    max-z: -185
+  '102':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -189
+    max-x: 20
+    max-y: 71
+    max-z: -188
+  '103':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -193
+    max-x: 20
+    max-y: 71
+    max-z: -192
+  '104':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -196
+    max-x: 20
+    max-y: 71
+    max-z: -195
+  '105':
+    world: house_of_wonders_v3
+    min-x: 19
+    min-y: 71
+    min-z: -199
+    max-x: 20
+    max-y: 71
+    max-z: -198
+  '106':
+    world: house_of_wonders_v3
+    min-x: 16
+    min-y: 71
+    min-z: -200
+    max-x: 17
+    max-y: 71
+    max-z: -199
+  '107':
+    world: house_of_wonders_v3
+    min-x: 13
+    min-y: 71
+    min-z: -200
+    max-x: 14
+    max-y: 71
+    max-z: -199
+  '108':
+    world: house_of_wonders_v3
+    min-x: 10
+    min-y: 71
+    min-z: -200
+    max-x: 11
+    max-y: 71
+    max-z: -199
+  '109':
+    world: house_of_wonders_v3
+    min-x: 6
+    min-y: 71
+    min-z: -200
+    max-x: 7
+    max-y: 71
+    max-z: -199
+  '110':
+    world: house_of_wonders_v3
+    min-x: 3
+    min-y: 71
+    min-z: -200
+    max-x: 4
+    max-y: 71
+    max-z: -199
+  '111':
+    world: house_of_wonders_v3
+    min-x: 0
+    min-y: 72
+    min-z: -200
+    max-x: 1
+    max-y: 72
+    max-z: -199
+  '112':
+    world: house_of_wonders_v3
+    min-x: -4
+    min-y: 72
+    min-z: -200
+    max-x: -3
+    max-y: 72
+    max-z: -199
+  '113':
+    world: house_of_wonders_v3
+    min-x: -7
+    min-y: 72
+    min-z: -200
+    max-x: -6
+    max-y: 72
+    max-z: -199
+  '114':
+    world: house_of_wonders_v3
+    min-x: -10
+    min-y: 72
+    min-z: -200
+    max-x: -9
+    max-y: 72
+    max-z: -199
+  '115':
+    world: house_of_wonders_v3
+    min-x: -14
+    min-y: 72
+    min-z: -200
+    max-x: -13
+    max-y: 72
+    max-z: -199
+  '116':
+    world: house_of_wonders_v3
+    min-x: -17
+    min-y: 72
+    min-z: -200
+    max-x: -16
+    max-y: 72
+    max-z: -199
+  '117':
+    world: house_of_wonders_v3
+    min-x: -20
+    min-y: 72
+    min-z: -200
+    max-x: -19
+    max-y: 72
+    max-z: -199
+  '118':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -197
+    max-x: -20
+    max-y: 72
+    max-z: -196
+  '119':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -194
+    max-x: -20
+    max-y: 72
+    max-z: -193
+  '120':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -191
+    max-x: -20
+    max-y: 72
+    max-z: -190
+  '121':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -187
+    max-x: -20
+    max-y: 72
+    max-z: -186
+  '122':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -184
+    max-x: -20
+    max-y: 72
+    max-z: -183
+  '123':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -181
+    max-x: -20
+    max-y: 72
+    max-z: -180
+  '124':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 72
+    min-z: -177
+    max-x: -20
+    max-y: 72
+    max-z: -176
+  '125':
+    world: house_of_wonders_v3
+    min-x: -21
+    min-y: 73
+    min-z: -174
+    max-x: -20
+    max-y: 73
+    max-z: -173
+finish:
+  world: house_of_wonders_v3
+  min-x: -21
+  min-y: 73
+  min-z: -174
+  max-x: -20
+  max-y: 73
+  max-z: -173
+lobby:
+  world: house_of_wonders_v3
+  x: 0.5
+  y: 65.0
+  z: 8.5
+  yaw: 180.0
+  pitch: 0.0
+time-limit-seconds: 1800
+fall-height: 57.0
+rules:
+  safe-checkpoint-indexes: 14,28,42,56,70,84,98,112,126
+  wonder: true
+  difficulty: EASY
+  stages: 3
+  schema: house-of-wonders-v3.1

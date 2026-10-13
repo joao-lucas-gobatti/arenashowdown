@@ -1,0 +1,10 @@
+database:
+  sqlite-file: arena.db
+  busy-timeout-ms: 5000
+backup:
+  enabled: true
+  on-startup: true
+  directory: backups
+  retention: 10
+ranking:
+  default-limit: 10

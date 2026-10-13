@@ -1,0 +1,201 @@
+[15:59:36] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.12.1+1-LTS; Eclipse Adoptium Temurin-21.0.12.1+1) on Windows 11 10.0 (amd64)
+[15:59:36] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[15:59:37] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[15:59:39] [Paper Plugin Remapper Thread - 1/INFO]: [PluginRemapper] Remapping plugin 'plugins\ArenaParkour.jar'...
+[15:59:40] [Paper Plugin Remapper Thread - 1/INFO]: [PluginRemapper] Done remapping plugin 'plugins\ArenaParkour.jar' in 1007ms.
+[15:59:41] [ServerMain/INFO]: [PluginInitializerManager] Initialized 3 plugins
+[15:59:41] [ServerMain/INFO]: [PluginInitializerManager] Bukkit plugins (3):
+ - ArenaCore (0.2.0-SNAPSHOT), ArenaParkour (0.3.0-SNAPSHOT), CassinoLobby (1.0.0)
+[16:00:03] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, profilesHost=https://api.mojang.com, name=PROD]
+[16:00:09] [ServerMain/INFO]: Loaded 1470 recipes
+[16:00:09] [ServerMain/INFO]: Loaded 1584 advancements
+[16:00:09] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Initialising converters for DataConverter...
+[16:00:10] [ServerMain/INFO]: [ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry] Finished initialising converters for DataConverter in 957,0ms
+[16:00:10] [Server thread/INFO]: Starting minecraft server version 1.21.11
+[16:00:10] [Server thread/INFO]: Loading properties
+[16:00:11] [Server thread/INFO]: This server is running Paper version 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) (Implementing API version 1.21.11-R0.1-SNAPSHOT)
+[16:00:11] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[16:00:11] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[16:00:11] [Server thread/INFO]: Using 4 threads for Netty based IO
+[16:00:13] [Server thread/INFO]: [MoonriseCommon] Paper is using 2 worker threads, 1 I/O threads
+[16:00:14] [Server thread/INFO]: Default game type: SURVIVAL
+[16:00:14] [Server thread/INFO]: Generating keypair
+[16:00:14] [Server thread/INFO]: Starting Minecraft server on 127.0.0.1:25565
+[16:00:14] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[16:00:14] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[16:00:15] [Server thread/INFO]: [ArenaCore] Loading server plugin ArenaCore v0.2.0-SNAPSHOT
+[16:00:15] [Server thread/INFO]: [CassinoLobby] Loading server plugin CassinoLobby v1.0.0
+[16:00:15] [Server thread/INFO]: [ArenaParkour] Loading server plugin ArenaParkour v0.3.0-SNAPSHOT
+[16:00:15] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[16:00:15] [Server thread/INFO]: Preparing level "world"
+[16:00:16] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:overworld'...
+[16:00:16] [Server thread/INFO]: Preparing spawn area: 100%
+[16:00:16] [Server thread/INFO]: Prepared spawn area in 5 ms
+[16:00:16] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_nether'...
+[16:00:16] [Server thread/INFO]: Prepared spawn area in 2 ms
+[16:00:16] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:the_end'...
+[16:00:16] [Server thread/INFO]: Prepared spawn area in 1 ms
+[16:00:16] [Server thread/INFO]: Done preparing level "world" (1.555s)
+[16:00:16] [Server thread/INFO]: [ArenaCore] Enabling ArenaCore v0.2.0-SNAPSHOT
+[16:00:16] [Server thread/INFO]: [com.arenashowdown.libs.hikari.HikariDataSource] ArenaCore-DB - Starting...
+[16:00:17] [Server thread/INFO]: [com.arenashowdown.libs.hikari.pool.HikariPool] ArenaCore-DB - Added connection org.sqlite.jdbc4.JDBC4Connection@6a219e1b
+[16:00:17] [Server thread/INFO]: [com.arenashowdown.libs.hikari.HikariDataSource] ArenaCore-DB - Start completed.
+[16:00:17] [Server thread/INFO]: [ArenaCore] ArenaCore habilitado com persistência SQLite.
+[16:00:17] [Server thread/INFO]: [CassinoLobby] Enabling CassinoLobby v1.0.0
+[16:00:17] [arena-backup-0/INFO]: [ArenaCore] Backup SQLite verificado: arena-20261013-190017-809.db
+[16:00:18] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:cassino_lobby_v2'...
+[16:00:18] [Server thread/INFO]: Prepared spawn area in 1 ms
+[16:00:18] [Server thread/INFO]: [CassinoLobby] CassinoLobby pronto. Use /cassino generate.
+[16:00:18] [Server thread/INFO]: [ArenaParkour] Enabling ArenaParkour v0.3.0-SNAPSHOT
+[16:00:18] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:grand_dice_palace'...
+[16:00:18] [Server thread/INFO]: Preparing spawn area: 100%
+[16:00:18] [Server thread/INFO]: Prepared spawn area in 2 ms
+[16:00:18] [Server thread/INFO]: [ArenaParkour] ArenaParkour habilitado; 4 arena(s) carregada(s); Palace V2 preservado; House of Wonders V3 disponível.
+[16:00:18] [Server thread/INFO]: [spark] Starting background profiler...
+[16:00:19] [Server thread/INFO]: [spark] The async-profiler engine is not supported for your os/arch (windows11/amd64), so the built-in Java engine will be used instead.
+[16:00:19] [Server thread/INFO]: Running delayed init tasks
+[16:00:21] [Server thread/INFO]: Done (47.321s)! For help, type "help"
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: *************************************************************************************
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: You are running the latest build for your Minecraft version (1.21.11)
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: However, you are 6 release(s) behind the latest stable release (26.3)!
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: It is recommended that you update as soon as possible
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: https://papermc.io/downloads/paper
+[16:00:22] [Paper Async Task Handler Thread - 1/WARN]: *************************************************************************************
+[16:02:56] [User Authenticator #0/INFO]: UUID of player sxnifero is 27fb47d0-8df4-4d4b-ba97-7229f31a8849
+[16:02:57] [Server thread/INFO]: sxnifero joined the game
+[16:02:57] [Server thread/INFO]: sxnifero[/127.0.0.1:63988] logged in with entity id 85 at ([grand_dice_palace]40.10703407842809, 81.05075130536622, -1.3062934822806693)
+[16:03:16] [Server thread/INFO]: sxnifero issued server command: /wonder generate
+[16:03:19] [Server thread/INFO]: Selecting spawn point for world 'minecraft:house_of_wonders_v3'...
+[16:03:26] [Paper Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH  - 1.21.11-132-c5eb079 (MC: 1.21.11) ---
+[16:03:26] [Paper Watchdog Thread/ERROR]: The server has not responded for 10 seconds! Creating thread dump
+[16:03:26] [Paper Watchdog Thread/ERROR]: ------------------------------
+[16:03:26] [Paper Watchdog Thread/ERROR]: Server thread dump (Look for plugins here before reporting to Paper!):
+[16:03:26] [Paper Watchdog Thread/ERROR]: [ChunkTaskScheduler] Chunk wait task info below: 
+[16:03:26] [Paper Watchdog Thread/ERROR]: [ChunkTaskScheduler] Chunk wait: [( 0,7) in 'house_of_wonders_v3']
+[16:03:27] [Paper Watchdog Thread/ERROR]: [ChunkTaskScheduler] Chunk holder: NewChunkHolder{world=house_of_wonders_v3, chunkX=0, chunkZ=7, entityChunkFromDisk=false, lastChunkCompletion={chunk_class=net.minecraft.world.level.chunk.ProtoChunk,status=minecraft:initialize_light}, currentGenStatus=minecraft:initialize_light, requestedGenStatus=minecraft:full, generationTask=null, generationTaskStatus=null, priority=BLOCKING, priorityLocked=false, neighbourRequestedPriority=null, effective_priority=BLOCKING, oldTicketLevel=33, currentTicketLevel=33, totalNeighboursUsingThisChunk=1, fullNeighbourChunksLoadedBitset=25599, currentChunkStatus=INACCESSIBLE, pendingChunkStatus=INACCESSIBLE, is_unload_safe=ticket_level, killed=false}
+[16:03:27] [Paper Watchdog Thread/ERROR]: ------------------------------
+[16:03:27] [Paper Watchdog Thread/ERROR]: Current Thread: Server thread
+[16:03:27] [Paper Watchdog Thread/ERROR]: 	PID: 50 | Suspended: false | Native: false | State: TIMED_WAITING
+[16:03:27] [Paper Watchdog Thread/ERROR]: 	Stack:
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		java.base@21.0.12.1/jdk.internal.misc.Unsafe.park(Native Method)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		java.base@21.0.12.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.util.thread.BlockableEventLoop.waitForTasks(BlockableEventLoop.java:172)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:162)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.ServerChunkCache$MainThreadExecutor.managedBlock(ServerChunkCache.java:795)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.ServerChunkCache.syncLoad(ServerChunkCache.java:120)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.ServerChunkCache.getChunkFallback(ServerChunkCache.java:154)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.ServerChunkCache.getChunk(ServerChunkCache.java:317)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.world.level.Level.getChunk(Level.java:967)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.PlayerSpawnFinder.getOverworldRespawnPos(PlayerSpawnFinder.java:155)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.level.PlayerSpawnFinder.getSpawnPosInChunk(PlayerSpawnFinder.java:189)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.setInitialSpawn(MinecraftServer.java:851)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.initWorld(MinecraftServer.java:741)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		org.bukkit.craftbukkit.CraftServer.createWorld(CraftServer.java:1309)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		org.bukkit.Bukkit.createWorld(Bukkit.java:828)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		org.bukkit.WorldCreator.createWorld(WorldCreator.java:494)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		ArenaParkour.jar//com.arenashowdown.parkour.wonder.WonderBuilder.world(WonderBuilder.java:42)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		ArenaParkour.jar//com.arenashowdown.parkour.wonder.WonderBuilder.generate(WonderBuilder.java:51)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		ArenaParkour.jar//com.arenashowdown.parkour.wonder.WonderService.onCommand(WonderService.java:170)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		org.bukkit.command.PluginCommand.execute(PluginCommand.java:45)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		io.papermc.paper.command.brigadier.bukkit.BukkitCommandNode$BukkitBrigCommand.run(BukkitCommandNode.java:83)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		com.mojang.brigadier.context.ContextChain.runExecutable(ContextChain.java:73)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:30)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.tasks.ExecuteCommand.execute(ExecuteCommand.java:13)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.UnboundEntryAction.lambda$bind$0(UnboundEntryAction.java:8)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.UnboundEntryAction$$Lambda/0x0000025782942b00.execute(Unknown Source)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.CommandQueueEntry.execute(CommandQueueEntry.java:5)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.execution.ExecutionContext.runCommandQueue(ExecutionContext.java:104)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.Commands.executeCommandInContext(Commands.java:469)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.Commands.performCommand(Commands.java:374)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.commands.Commands.performCommand(Commands.java:362)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.network.ServerGamePacketListenerImpl.performUnsignedChatCommand(ServerGamePacketListenerImpl.java:2375)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.network.ServerGamePacketListenerImpl.lambda$handleChatCommand$12(ServerGamePacketListenerImpl.java:2348)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.network.ServerGamePacketListenerImpl$$Lambda/0x0000025782939910.run(Unknown Source)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.TickTask.run(TickTask.java:18)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:177)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:24)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:1525)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:188)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:151)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:1505)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:1499)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.recordTaskExecutionTimeWhileWaiting(MinecraftServer.java:1225)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1341)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:388)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer$$Lambda/0x000002578200f880.run(Unknown Source)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		java.base@21.0.12.1/java.lang.Thread.runWith(Thread.java:1596)
+[16:03:27] [Paper Watchdog Thread/ERROR]: 		java.base@21.0.12.1/java.lang.Thread.run(Thread.java:1583)
+[16:03:27] [Paper Watchdog Thread/ERROR]: ------------------------------
+[16:03:27] [Paper Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---
+[16:03:27] [Paper Watchdog Thread/ERROR]: ------------------------------
+[16:03:31] [Server thread/INFO]: Loading 0 persistent chunks for world 'minecraft:house_of_wonders_v3'...
+[16:03:31] [Server thread/INFO]: Preparing spawn area: 100%
+[16:03:31] [Server thread/INFO]: Prepared spawn area in 11901 ms
+[16:03:59] [Server thread/WARN]: A manual (plugin-induced) save has been detected while server is configured to auto-save. This may affect performance.
+[16:04:06] [Server thread/INFO]: sxnifero issued server command: /wonder tp
+[16:04:13] [Server thread/INFO]: sxnifero issued server command: /wonder hub
+[16:04:20] [Server thread/INFO]: [sxnifero: Set own game mode to Spectator Mode]
+[16:04:43] [Server thread/INFO]: [sxnifero: Set own game mode to Creative Mode]
+[16:05:22] [Server thread/INFO]: sxnifero lost connection: Disconnected
+[16:05:22] [Server thread/INFO]: sxnifero left the game
+[16:06:45] [Server thread/INFO]: Stopping server
+[16:06:45] [Server thread/INFO]: [ArenaParkour] Disabling ArenaParkour v0.3.0-SNAPSHOT
+[16:06:45] [Server thread/INFO]: [CassinoLobby] Disabling CassinoLobby v1.0.0
+[16:06:45] [Server thread/INFO]: [ArenaCore] Disabling ArenaCore v0.2.0-SNAPSHOT
+[16:06:45] [Server thread/INFO]: [com.arenashowdown.libs.hikari.HikariDataSource] ArenaCore-DB - Shutdown initiated...
+[16:06:45] [Server thread/INFO]: [com.arenashowdown.libs.hikari.HikariDataSource] ArenaCore-DB - Shutdown completed.
+[16:06:45] [Server thread/INFO]: Saving players
+[16:06:45] [Server thread/INFO]: Saving worlds
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world' in 0,00s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world'
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_nether'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_nether'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_nether'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_nether' in 0,00s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_nether'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_nether'
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'world_the_end'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'world_the_end'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'world_the_end'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'world_the_end' in 0,00s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'world_the_end'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'world_the_end'
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[cassino_lobby_v2]'/minecraft:cassino_lobby_v2
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'cassino_lobby_v2'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'cassino_lobby_v2'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'cassino_lobby_v2'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 12 entity chunks, 0 poi chunks in world 'cassino_lobby_v2' in 0,02s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'cassino_lobby_v2'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'cassino_lobby_v2'
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[grand_dice_palace]'/minecraft:grand_dice_palace
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'grand_dice_palace'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'grand_dice_palace'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'grand_dice_palace'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 1025 block chunks, 171 entity chunks, 0 poi chunks in world 'grand_dice_palace' in 0,36s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'grand_dice_palace'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'grand_dice_palace'
+[16:06:45] [Server thread/INFO]: Saving chunks for level 'ServerLevel[house_of_wonders_v3]'/minecraft:house_of_wonders_v3
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'house_of_wonders_v3'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted chunk system for world 'house_of_wonders_v3'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saving all chunkholders for world 'house_of_wonders_v3'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'house_of_wonders_v3' in 0,02s
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'house_of_wonders_v3'
+[16:06:45] [Server thread/INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'house_of_wonders_v3'
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (cassino_lobby_v2): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (grand_dice_palace): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage (house_of_wonders_v3): All chunks are saved
+[16:06:45] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[16:06:45] [Server thread/INFO]: Waiting for all RegionFile I/O tasks to complete...
+[16:06:45] [Server thread/INFO]: All RegionFile I/O tasks to complete
+[16:06:45] [Server thread/INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...
+[16:06:45] [Server thread/INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...

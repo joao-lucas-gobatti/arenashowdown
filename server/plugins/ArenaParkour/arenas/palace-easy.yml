@@ -1,0 +1,263 @@
+name: palace-easy
+world: grand_dice_palace
+start:
+  world: grand_dice_palace
+  x: 0.5
+  y: 71.0
+  z: -29.5
+  yaw: 180.0
+  pitch: 0.0
+spawns:
+  '0':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: -28.5
+    yaw: 180.0
+    pitch: 0.0
+  '1':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: -29.5
+    yaw: 180.0
+    pitch: 0.0
+  '2':
+    world: grand_dice_palace
+    x: -0.5
+    y: 71.0
+    z: -30.5
+    yaw: 180.0
+    pitch: 0.0
+  '3':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: -28.5
+    yaw: 180.0
+    pitch: 0.0
+  '4':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: -29.5
+    yaw: 180.0
+    pitch: 0.0
+  '5':
+    world: grand_dice_palace
+    x: 0.5
+    y: 71.0
+    z: -30.5
+    yaw: 180.0
+    pitch: 0.0
+  '6':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: -28.5
+    yaw: 180.0
+    pitch: 0.0
+  '7':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: -29.5
+    yaw: 180.0
+    pitch: 0.0
+  '8':
+    world: grand_dice_palace
+    x: 1.5
+    y: 71.0
+    z: -30.5
+    yaw: 180.0
+    pitch: 0.0
+checkpoints:
+  '0':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 71
+    min-z: -35
+    max-x: 1
+    max-y: 71
+    max-z: -33
+  '1':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 71
+    min-z: -39
+    max-x: 1
+    max-y: 71
+    max-z: -37
+  '2':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 71
+    min-z: -43
+    max-x: 1
+    max-y: 71
+    max-z: -41
+  '3':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: -47
+    max-x: 1
+    max-y: 72
+    max-z: -45
+  '4':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: -51
+    max-x: 1
+    max-y: 72
+    max-z: -49
+  '5':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 72
+    min-z: -55
+    max-x: 1
+    max-y: 72
+    max-z: -53
+  '6':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 73
+    min-z: -59
+    max-x: 1
+    max-y: 73
+    max-z: -57
+  '7':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 73
+    min-z: -63
+    max-x: 1
+    max-y: 73
+    max-z: -61
+  '8':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 73
+    min-z: -67
+    max-x: 1
+    max-y: 73
+    max-z: -65
+  '9':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 73
+    min-z: -71
+    max-x: 1
+    max-y: 73
+    max-z: -69
+  '10':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: -75
+    max-x: 1
+    max-y: 74
+    max-z: -73
+  '11':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: -79
+    max-x: 1
+    max-y: 74
+    max-z: -77
+  '12':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 74
+    min-z: -83
+    max-x: 1
+    max-y: 74
+    max-z: -81
+  '13':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 75
+    min-z: -87
+    max-x: 1
+    max-y: 75
+    max-z: -85
+  '14':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 75
+    min-z: -91
+    max-x: 1
+    max-y: 75
+    max-z: -89
+  '15':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 75
+    min-z: -95
+    max-x: 1
+    max-y: 75
+    max-z: -93
+  '16':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 75
+    min-z: -99
+    max-x: 1
+    max-y: 75
+    max-z: -97
+  '17':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: -103
+    max-x: 1
+    max-y: 76
+    max-z: -101
+  '18':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: -107
+    max-x: 1
+    max-y: 76
+    max-z: -105
+  '19':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 76
+    min-z: -111
+    max-x: 1
+    max-y: 76
+    max-z: -109
+  '20':
+    world: grand_dice_palace
+    min-x: -1
+    min-y: 77
+    min-z: -115
+    max-x: 1
+    max-y: 77
+    max-z: -113
+finish:
+  world: grand_dice_palace
+  min-x: -1
+  min-y: 77
+  min-z: -115
+  max-x: 1
+  max-y: 77
+  max-z: -113
+lobby:
+  world: grand_dice_palace
+  x: 0.5
+  y: 71.0
+  z: 0.5
+  yaw: 180.0
+  pitch: 0.0
+time-limit-seconds: 900
+fall-height: 68.0
+rules:
+  stages: 3
+  difficulty: EASY
+  palace: true

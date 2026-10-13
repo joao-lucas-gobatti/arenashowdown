@@ -6,6 +6,12 @@ depend: [ArenaCore]
 authors: [Arena Showdown]
 description: Parkour competitivo integrado ao ArenaCore
 commands:
+  wonder:
+    description: House of Wonders V3 — geração, treino e inspeção
+    usage: /wonder hub
+  palace:
+    description: The Grand Dice Parkour Palace — treino e geração
+    usage: /palace hub
   parkour:
     description: Configura e testa arenas de Parkour
     usage: /parkour help

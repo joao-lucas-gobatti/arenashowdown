@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.arenashowdown.parkour.palace.PalacePreviewTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-13T18:55:33.631Z" hostname="DESKTOP-31DPBHB" time="4.639">
+  <properties/>
+  <testcase name="renderEveryChamber()" classname="com.arenashowdown.parkour.palace.PalacePreviewTest" time="4.639"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

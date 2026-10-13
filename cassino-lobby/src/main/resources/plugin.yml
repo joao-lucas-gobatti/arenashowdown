@@ -1,0 +1,17 @@
+name: CassinoLobby
+version: '1.0.0'
+main: com.arenashowdown.cassino.CassinoLobbyPlugin
+api-version: '1.21.11'
+authors: [Arena Showdown]
+description: Lobby cassino art déco do Arena Showdown
+softdepend: [ArenaCore]
+commands:
+  cassino:
+    description: Gera e administra o lobby cassino
+    usage: /cassino <generate|regenerate|tp|setportal|reload|status>
+    permission: cassino.admin
+permissions:
+  cassino.admin:
+    description: Administra o lobby cassino
+    default: true
+

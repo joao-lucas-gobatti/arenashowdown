@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.arenashowdown.core.service.ArenaServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-13T16:43:16.180Z" hostname="DESKTOP-31DPBHB" time="0.165">
+  <properties/>
+  <testcase name="registrationClosesAfterWaiting()" classname="com.arenashowdown.core.service.ArenaServiceTest" time="0.058"/>
+  <testcase name="lifecycleRejectsInvalidTransitions()" classname="com.arenashowdown.core.service.ArenaServiceTest" time="0.054"/>
+  <testcase name="duplicateEventDoesNotDuplicatePoints()" classname="com.arenashowdown.core.service.ArenaServiceTest" time="0.053"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,6 @@
+countdown-seconds: 5
+tie-threshold-ms: 10
+scoreboard-update-ticks: 4
+default-time-limit-seconds: 300
+default-fall-height: 50.0
+snapshot-directory: snapshots

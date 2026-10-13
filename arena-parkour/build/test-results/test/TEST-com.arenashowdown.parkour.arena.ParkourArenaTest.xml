@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.arenashowdown.parkour.arena.ParkourArenaTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-13T18:55:32.344Z" hostname="DESKTOP-31DPBHB" time="0.15">
+  <properties/>
+  <testcase name="reportsIncompleteArena()" classname="com.arenashowdown.parkour.arena.ParkourArenaTest" time="0.1"/>
+  <testcase name="acceptsCompleteArenaAndThreeDimensionalRegions()" classname="com.arenashowdown.parkour.arena.ParkourArenaTest" time="0.037"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

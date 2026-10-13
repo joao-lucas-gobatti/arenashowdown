@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-13T18:55:38.727Z" hostname="DESKTOP-31DPBHB" time="0.167">
+  <properties/>
+  <testcase name="everyLandingIsSupportedClearAndInsideConservativePhysics()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.032"/>
+  <testcase name="completePlanFillsApprovedEnvelopeWithLayeredPalette()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.089"/>
+  <testcase name="blueprintHasTwelveDistinctStagesAndExactGlobalIndexing()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.018"/>
+  <testcase name="representativeLandmarksAreVoxelCompositions()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.001"/>
+  <testcase name="obstacleVocabularyIsBroadAndSpecialMovementIsNotImplicit()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.004"/>
+  <testcase name="reportsImportantCoordinates()" classname="com.arenashowdown.parkour.wonder.WonderFullArchitectureTest" time="0.018"/>
+  <system-out><![CDATA[WONDER_METRICS cells=137391 materials=87 bounds=431x127x433 (-221,58,-212)..(209,184,220)
+POINT wing=EASY stage=1 transition=0 type=START x=-20 y=69 z=-48
+POINT wing=EASY stage=1 transition=14 type=CHECKPOINT x=-15 y=69 z=-57
+POINT wing=EASY stage=1 transition=28 type=CHECKPOINT x=-15 y=70 z=-67
+POINT wing=EASY stage=1 transition=42 type=FINISH x=-15 y=71 z=-77
+POINT wing=EASY stage=2 transition=0 type=START x=0 y=105 z=-110
+POINT wing=EASY stage=2 transition=14 type=CHECKPOINT x=4 y=107 z=-146
+POINT wing=EASY stage=2 transition=28 type=CHECKPOINT x=-9 y=109 z=-108
+POINT wing=EASY stage=2 transition=42 type=FINISH x=14 y=111 z=-146
+POINT wing=EASY stage=3 transition=0 type=START x=-20 y=70 z=-166
+POINT wing=EASY stage=3 transition=14 type=CHECKPOINT x=20 y=71 z=-173
+POINT wing=EASY stage=3 transition=28 type=CHECKPOINT x=1 y=72 z=-200
+POINT wing=EASY stage=3 transition=42 type=FINISH x=-20 y=73 z=-174
+POINT wing=MEDIUM stage=1 transition=0 type=START x=48 y=74 z=-15
+POINT wing=MEDIUM stage=1 transition=14 type=CHECKPOINT x=62 y=76 z=3
+POINT wing=MEDIUM stage=1 transition=28 type=CHECKPOINT x=76 y=77 z=9
+POINT wing=MEDIUM stage=1 transition=42 type=FINISH x=90 y=78 z=-9
+POINT wing=MEDIUM stage=2 transition=0 type=START x=114 y=79 z=9
+POINT wing=MEDIUM stage=2 transition=14 type=CHECKPOINT x=145 y=81 z=2
+POINT wing=MEDIUM stage=2 transition=28 type=CHECKPOINT x=113 y=83 z=-14
+POINT wing=MEDIUM stage=2 transition=42 type=FINISH x=129 y=85 z=22
+POINT wing=MEDIUM stage=3 transition=0 type=START x=162 y=83 z=-18
+POINT wing=MEDIUM stage=3 transition=14 type=CHECKPOINT x=176 y=85 z=12
+POINT wing=MEDIUM stage=3 transition=28 type=CHECKPOINT x=190 y=87 z=-6
+POINT wing=MEDIUM stage=3 transition=42 type=FINISH x=204 y=89 z=0
+POINT wing=HARD stage=1 transition=0 type=START x=-49 y=77 z=27
+POINT wing=HARD stage=1 transition=14 type=CHECKPOINT x=-70 y=77 z=6
+POINT wing=HARD stage=1 transition=28 type=CHECKPOINT x=-91 y=77 z=27
+POINT wing=HARD stage=1 transition=42 type=FINISH x=-112 y=78 z=6
+POINT wing=HARD stage=2 transition=0 type=START x=-118 y=85 z=0
+POINT wing=HARD stage=2 transition=14 type=CHECKPOINT x=-130 y=92 z=9
+POINT wing=HARD stage=2 transition=28 type=CHECKPOINT x=-134 y=99 z=-5
+POINT wing=HARD stage=2 transition=42 type=FINISH x=-118 y=106 z=-6
+POINT wing=HARD stage=3 transition=0 type=START x=-177 y=93 z=17
+POINT wing=HARD stage=3 transition=14 type=CHECKPOINT x=-179 y=96 z=-14
+POINT wing=HARD stage=3 transition=28 type=CHECKPOINT x=-192 y=99 z=8
+POINT wing=HARD stage=3 transition=42 type=FINISH x=-174 y=102 z=-1
+POINT wing=IMPOSSIBLE stage=1 transition=0 type=START x=24 y=99 z=48
+POINT wing=IMPOSSIBLE stage=1 transition=14 type=CHECKPOINT x=25 y=99 z=65
+POINT wing=IMPOSSIBLE stage=1 transition=28 type=CHECKPOINT x=24 y=100 z=83
+POINT wing=IMPOSSIBLE stage=1 transition=42 type=FINISH x=25 y=101 z=100
+POINT wing=IMPOSSIBLE stage=2 transition=0 type=START x=24 y=109 z=105
+POINT wing=IMPOSSIBLE stage=2 transition=14 type=CHECKPOINT x=-18 y=114 z=119
+POINT wing=IMPOSSIBLE stage=2 transition=28 type=CHECKPOINT x=24 y=119 z=133
+POINT wing=IMPOSSIBLE stage=2 transition=42 type=FINISH x=-18 y=124 z=147
+POINT wing=IMPOSSIBLE stage=3 transition=0 type=START x=9 y=133 z=172
+POINT wing=IMPOSSIBLE stage=3 transition=14 type=CHECKPOINT x=-11 y=147 z=200
+POINT wing=IMPOSSIBLE stage=3 transition=28 type=CHECKPOINT x=11 y=161 z=180
+POINT wing=IMPOSSIBLE stage=3 transition=42 type=FINISH x=-11 y=175 z=193
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

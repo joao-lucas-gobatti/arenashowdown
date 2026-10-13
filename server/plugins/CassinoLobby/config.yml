@@ -1,0 +1,58 @@
+world:
+  name: cassino_lobby_v2
+  base-y: 64
+  auto-create: true
+  auto-teleport-first-join: true
+  protect: true
+  v1-name: cassino_lobby
+generation:
+  blocks-per-tick: 6000
+  auto-generate: false
+scoreboard:
+  championship-id: principal
+  refresh-seconds: 10
+  max-entries: 8
+  title: ARENA SHOWDOWN
+  fallback-lines:
+  - §fA competição vai começar
+  - §7Use /arena ranking principal
+portals:
+  corrida:
+    title: CORRIDA
+    command: ''
+  skywars:
+    title: SKYWARS
+    command: ''
+  battle_royale:
+    title: BATTLE ROYALE
+    command: ''
+    destination:
+      world: cassino_lobby
+      x: 23.891804288172413
+      y: 67.0
+      z: 0.4824759033978715
+      yaw: 84.769104
+      pitch: 35.587337
+  gamble:
+    title: GAMBLE
+    command: ''
+  parkour:
+    title: PARKOUR
+    command: 'palace hub'
+    destination:
+      world: cassino_lobby
+      x: -8.788383859972843
+      y: 73.74347304220613
+      z: 64.18483874792464
+      yaw: -174.38416
+      pitch: 19.172857
+  roube_a_bandeira:
+    title: ROUBE A BANDEIRA
+    command: ''
+  csgo:
+    title: CSGO
+    command: ''
+  tnt_run:
+    title: TNT RUN
+    command: ''
+

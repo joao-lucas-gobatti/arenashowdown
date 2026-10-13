@@ -1,0 +1,18 @@
+backup:
+  enabled: true
+  on-startup: true
+  directory: backups
+  retention: 10
+database:
+  busy-timeout-ms: 5000
+  type: sqlite
+  sqlite-file: arena.db
+  postgres:
+    host: localhost
+    port: 5432
+    database: arena_showdown
+    username: arena
+    password: change-me
+    maximum-pool-size: 8
+ranking:
+  default-limit: 10

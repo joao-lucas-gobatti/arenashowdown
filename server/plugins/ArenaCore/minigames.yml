@@ -1,0 +1,18 @@
+# Habilitação e opções gerais. Cada plugin de minigame pode acrescentar sua própria seção.
+minigames:
+  corrida:
+    enabled: false
+  skywars:
+    enabled: false
+  battle-royale:
+    enabled: false
+  desafio-de-sorte:
+    enabled: false
+  parkour:
+    enabled: false
+  roube-a-bandeira:
+    enabled: false
+  csgo:
+    enabled: false
+  tnt-run:
+    enabled: false

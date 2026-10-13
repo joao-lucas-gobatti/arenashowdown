@@ -1,0 +1,7 @@
+/backups/
+/build/
+/.gradle/
+!src/main/java/com/arenashowdown/cassino/build/
+!src/main/java/com/arenashowdown/cassino/build/*.java
+!src/test/java/com/arenashowdown/cassino/build/
+!src/test/java/com/arenashowdown/cassino/build/*.java
