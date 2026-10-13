@@ -1,0 +1,2 @@
+# Aceite necessário exclusivamente para o servidor local de desenvolvimento autorizado.
+eula=true
