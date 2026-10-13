@@ -39,13 +39,23 @@ O servidor escuta somente em `127.0.0.1:25565`. Em outro PowerShell, encerre de 
 
 Operações administrativas exigem `arena.admin` (OP por padrão). Participação e consulta usam `arena.play`.
 
-## Persistência e API
+## Persistência, YAML e API
 
-SQLite é o padrão de desenvolvimento. PostgreSQL pode ser selecionado em `plugins/ArenaCore/config.yml`. Todas as operações de banco são executadas fora da thread principal. Cada evento de pontuação possui `event-id` único, impedindo crédito duplicado mesmo após reinício. Plugins de minigame obtêm `ArenaApi` pelo `ServicesManager` do Bukkit.
+SQLite é o armazenamento principal e não exige PostgreSQL, MySQL ou Docker. O banco `plugins/ArenaCore/arena.db` e seu esquema são criados automaticamente na primeira inicialização. Todas as operações de banco são executadas fora da thread principal. Cada evento de pontuação é gravado em uma transação e possui `event-id` único, impedindo crédito duplicado mesmo após reinício.
+
+As regras editáveis ficam fora do código:
+
+- `plugins/ArenaCore/minigames.yml`: habilitação e opções dos minigames.
+- `plugins/ArenaCore/scoring.yml`: valores de pontuação.
+- `plugins/ArenaCore/config.yml`: SQLite, ranking e política de backup.
+
+Por padrão, cada inicialização cria uma cópia consistente em `plugins/ArenaCore/backups`, valida-a com `PRAGMA integrity_check` e conserva as 10 mais recentes. O snapshot usa o recurso `VACUUM INTO` do SQLite sem bloquear a thread principal do Minecraft.
+
+Plugins de minigame obtêm `ArenaApi` pelo `ServicesManager` do Bukkit. A lógica depende de `ArenaRepository`, não de SQL diretamente, permitindo trocar a implementação de armazenamento no futuro.
 
 ## Limitações atuais
 
 - Equipes são registradas como identificadores dos participantes; cadastro e ranking agregado de equipes ainda não têm comandos próprios.
 - Lobby e scoreboard têm ponto de integração via API, mas ainda não possuem apresentação visual.
-- Migrações usam criação idempotente de esquema; versionamento formal de migrations será necessário antes de produção.
+- Migrações usam criação idempotente de esquema; versionamento formal de migrations será necessário se o modelo crescer.
 - Velocity e os oito minigames estão deliberadamente fora desta primeira etapa.

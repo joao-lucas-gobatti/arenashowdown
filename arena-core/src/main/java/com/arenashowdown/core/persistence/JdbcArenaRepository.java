@@ -47,8 +47,19 @@ public final class JdbcArenaRepository implements ArenaRepository {
 
     @Override public boolean insertScoreEvent(String eventId, String championshipId, UUID playerId, int points, String source) throws SQLException {
         String sql = "INSERT INTO score_events(event_id,championship_id,player_id,points,source,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(event_id) DO NOTHING";
-        try (Connection con = database.connection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1,eventId); ps.setString(2,championshipId); ps.setString(3,playerId.toString()); ps.setInt(4,points); ps.setString(5,source); ps.setString(6,Instant.now().toString()); return ps.executeUpdate() == 1;
+        try (Connection con = database.connection()) {
+            con.setAutoCommit(false);
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1,eventId); ps.setString(2,championshipId); ps.setString(3,playerId.toString()); ps.setInt(4,points); ps.setString(5,source); ps.setString(6,Instant.now().toString());
+                boolean inserted = ps.executeUpdate() == 1;
+                con.commit();
+                return inserted;
+            } catch (SQLException e) {
+                try { con.rollback(); } catch (SQLException rollbackFailure) { e.addSuppressed(rollbackFailure); }
+                throw e;
+            } finally {
+                con.setAutoCommit(true);
+            }
         }
     }
 

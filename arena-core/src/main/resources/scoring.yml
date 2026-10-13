@@ -1,0 +1,8 @@
+# Valores padrão externos ao código. Os plugins de minigame devem usar event-id único.
+scoring:
+  participation: 0
+  positions:
+    first: 10
+    second: 7
+    third: 5
+  allow-negative-points: true

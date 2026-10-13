@@ -9,13 +9,13 @@ import java.sql.Statement;
 
 public final class Database implements AutoCloseable {
     private final HikariDataSource dataSource;
+    private final Path file;
 
-    public Database(String jdbcUrl, String username, String password, int poolSize) throws SQLException {
+    private Database(Path file, int busyTimeoutMs) throws SQLException {
+        this.file = file.toAbsolutePath().normalize();
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(jdbcUrl);
-        if (username != null) config.setUsername(username);
-        if (password != null) config.setPassword(password);
-        config.setMaximumPoolSize(poolSize);
+        config.setJdbcUrl("jdbc:sqlite:" + this.file + "?foreign_keys=on&journal_mode=WAL&synchronous=NORMAL&busy_timeout=" + busyTimeoutMs);
+        config.setMaximumPoolSize(1);
         config.setMinimumIdle(1);
         config.setPoolName("ArenaCore-DB");
         config.setConnectionTimeout(5_000);
@@ -24,10 +24,13 @@ public final class Database implements AutoCloseable {
     }
 
     public static Database sqlite(Path file) throws SQLException {
-        return new Database("jdbc:sqlite:" + file.toAbsolutePath(), null, null, 1);
+        return sqlite(file, 5_000);
     }
 
+    public static Database sqlite(Path file, int busyTimeoutMs) throws SQLException { return new Database(file, busyTimeoutMs); }
+
     public Connection connection() throws SQLException { return dataSource.getConnection(); }
+    public Path file() { return file; }
 
     private void migrate() throws SQLException {
         try (Connection connection = connection(); Statement statement = connection.createStatement()) {
