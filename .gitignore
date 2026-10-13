@@ -23,4 +23,5 @@ server/whitelist.json
 server/.console-input
 server/.console_history
 server/.server-pid
+server-test-delivery2/
 *.iml

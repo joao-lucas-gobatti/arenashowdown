@@ -1,5 +1,5 @@
 name: ArenaCore
-version: '0.1.0-SNAPSHOT'
+version: '0.2.0-SNAPSHOT'
 main: com.arenashowdown.core.ArenaCorePlugin
 api-version: '1.21.11'
 authors: [Arena Showdown]
@@ -11,6 +11,19 @@ commands:
 permissions:
   arena.admin:
     description: Gerencia campeonatos e pontuação
+    default: op
+    children:
+      arena.admin.championship: true
+      arena.admin.match: true
+      arena.admin.team: true
+      arena.admin.score: true
+  arena.admin.championship:
+    default: op
+  arena.admin.match:
+    default: op
+  arena.admin.team:
+    default: op
+  arena.admin.score:
     default: op
   arena.play:
     description: Participa e consulta campeonatos

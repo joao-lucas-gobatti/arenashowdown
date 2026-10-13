@@ -31,3 +31,43 @@
 
 - Não houve conexão de um cliente Minecraft real; inscrição de jogador foi coberta por teste unitário da camada de serviço.
 - O Paper avisa que 1.21.11 não é a geração mais nova, mas também confirma que o build 132 é o mais recente desta versão escolhida.
+
+## Entrega 2 — campeonato e orquestração
+
+Data: 13/10/2026.
+
+### Testes automatizados
+
+- 8 testes JUnit executados, 0 falhas e 0 erros.
+- Campeonato completo por equipes executado com `FakeMinigame`.
+- Cobertos: criação, inscrição UUID, equipes, atribuição, pausa/retomada, sequência de minigame, estados de partida, resultado oficial, empate, ranking individual/equipe, desconexão, reconexão, abandono sem reconexão, resultado duplicado, reinício de rodada e reabertura do SQLite.
+- Backup, restauração e rejeição de backup inválido continuam cobertos.
+
+### Teste real no Paper
+
+- Uma instância já estava ativa em `127.0.0.1:25565`; ela não foi encerrada nem alterada durante o teste.
+- Foi criado um servidor descartável e ignorado pelo Git em `server-test-delivery2`, usando `127.0.0.1:25566`.
+- Paper 1.21.11 build 132 carregou ArenaCore `0.2.0-SNAPSHOT` sem erro de plugin.
+- Campeonato `d2`, modo `TEAMS`, criado com sequência `parkour`.
+- Alice e Bob foram inscritos por UUID e atribuídos às equipes Red e Blue.
+- A partida `d2-r1` percorreu `WAITING → PREPARING → COUNTDOWN → RUNNING → FINISHED`.
+- O comando enviou pontos 99/88; a política YAML recalculou corretamente para 10/7.
+- Rankings retornaram Alice 10, Bob 7, Red 10/1 vitória e Blue 7/0 vitórias.
+- Reenvio do mesmo resultado foi rejeitado sem duplicar pontos.
+- `d2-r1-retry` foi criado para a mesma rodada sem reaplicar o resultado anterior.
+- Campeonato finalizado com campeão `red`.
+- Após reinício completo do Paper, campeão, rodada, partidas e rankings permaneceram disponíveis.
+- Dois backups SQLite automáticos foram criados e validados durante os boots.
+- Desligamentos concluíram com encerramento limpo do Hikari e salvamento dos mundos.
+
+### Compatibilidade dos dados anteriores
+
+- O banco original foi consultado sem escrita enquanto a instância principal permanecia ativa.
+- O campeonato anterior foi encontrado como `smoke | Copa Smoke | PREPARING`.
+- As migrações da Entrega 2 são exclusivamente aditivas; tabelas e eventos anteriores não são removidos.
+
+### Limitações não validadas em cliente real
+
+- Nenhum jogador Minecraft real conectou ao servidor de teste; snapshots Bukkit de inventário/localização e eventos `PlayerJoin/PlayerQuit` não foram exercitados end-to-end.
+- Nenhum minigame externo real registrou `MinigameAdapter`; o contrato foi validado com implementação simulada.
+- O retorno provisório ao lobby usa o spawn do mundo atual.

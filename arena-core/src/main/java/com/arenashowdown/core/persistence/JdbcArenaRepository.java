@@ -12,8 +12,11 @@ public final class JdbcArenaRepository implements ArenaRepository {
     public JdbcArenaRepository(Database database) { this.database = database; }
 
     @Override public void createChampionship(Championship c) throws SQLException {
-        try (Connection con = database.connection(); PreparedStatement ps = con.prepareStatement("INSERT INTO championships(id,name,state,created_at) VALUES(?,?,?,?)")) {
-            ps.setString(1, c.id()); ps.setString(2, c.name()); ps.setString(3, c.state().name()); ps.setString(4, c.createdAt().toString()); ps.executeUpdate();
+        try (Connection con = database.connection()) { con.setAutoCommit(false); try {
+            try(PreparedStatement ps=con.prepareStatement("INSERT INTO championships(id,name,state,created_at) VALUES(?,?,?,?)")){ps.setString(1,c.id());ps.setString(2,c.name());ps.setString(3,c.state().name());ps.setString(4,c.createdAt().toString());ps.executeUpdate();}
+            try(PreparedStatement ps=con.prepareStatement("INSERT INTO championship_settings(championship_id) VALUES(?)")){ps.setString(1,c.id());ps.executeUpdate();}
+            con.commit();
+        } catch(SQLException e){con.rollback();throw e;} finally{con.setAutoCommit(true);}
         }
     }
 
@@ -64,7 +67,15 @@ public final class JdbcArenaRepository implements ArenaRepository {
     }
 
     @Override public List<RankingEntry> ranking(String championshipId, int limit) throws SQLException {
-        String sql = "SELECT p.player_id,p.player_name,COALESCE(SUM(s.points),0) total FROM participants p LEFT JOIN score_events s ON s.championship_id=p.championship_id AND s.player_id=p.player_id WHERE p.championship_id=? GROUP BY p.player_id,p.player_name ORDER BY total DESC,p.player_name ASC LIMIT ?";
+        String tieBreaker = "MOST_WINS";
+        try (Connection con=database.connection();PreparedStatement ps=con.prepareStatement("SELECT tie_breaker FROM championship_settings WHERE championship_id=?")){ps.setString(1,championshipId);try(ResultSet rs=ps.executeQuery()){if(rs.next())tieBreaker=rs.getString(1);}}
+        String tieOrder = switch (tieBreaker) {
+            case "BEST_LAST_ROUND" -> "COALESCE((SELECT re.position FROM result_entries re JOIN match_results mr ON mr.id=re.result_id JOIN matches m ON m.id=mr.match_id WHERE m.championship_id=p.championship_id AND re.player_id=p.player_id ORDER BY m.round_number DESC LIMIT 1),999999) ASC";
+            case "EARLIEST_REGISTRATION" -> "p.joined_at ASC";
+            case "NAME" -> "p.player_name ASC";
+            default -> "COALESCE((SELECT COUNT(*) FROM result_entries re JOIN match_results mr ON mr.id=re.result_id JOIN matches m ON m.id=mr.match_id WHERE m.championship_id=p.championship_id AND re.player_id=p.player_id AND re.winner=1),0) DESC";
+        };
+        String sql = "SELECT p.player_id,p.player_name,COALESCE(SUM(s.points),0) total FROM participants p LEFT JOIN score_events s ON s.championship_id=p.championship_id AND s.player_id=p.player_id WHERE p.championship_id=? GROUP BY p.player_id,p.player_name,p.joined_at ORDER BY total DESC,"+tieOrder+",p.player_name ASC LIMIT ?";
         List<RankingEntry> result = new ArrayList<>();
         try (Connection con = database.connection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1,championshipId); ps.setInt(2,limit);

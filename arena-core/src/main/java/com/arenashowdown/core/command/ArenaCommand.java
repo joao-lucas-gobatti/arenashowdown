@@ -1,50 +1,40 @@
 package com.arenashowdown.core.command;
 
-import com.arenashowdown.api.model.ChampionshipState;
-import com.arenashowdown.core.service.ArenaService;
+import com.arenashowdown.api.model.*;
+import com.arenashowdown.core.player.PlayerSessionManager;
+import com.arenashowdown.core.service.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import java.time.Instant;
 import java.util.*;
-import java.util.concurrent.CompletionException;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 
-public final class ArenaCommand implements CommandExecutor, TabCompleter {
-    private final Plugin plugin; private final ArenaService service; private final int rankingLimit;
-    public ArenaCommand(Plugin plugin, ArenaService service, int rankingLimit) { this.plugin=plugin; this.service=service; this.rankingLimit=rankingLimit; }
-
-    @Override public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length==0 || args[0].equalsIgnoreCase("help")) { help(sender); return true; }
-        try {
-            switch(args[0].toLowerCase(Locale.ROOT)) {
-                case "create" -> { admin(sender); require(args,3,"/arena create <id> <nome>"); async(sender,service.createChampionship(args[1],String.join(" ",Arrays.copyOfRange(args,2,args.length))),c -> ok(sender,"Campeonato criado: "+c.id())); }
-                case "prepare" -> transition(sender,args,ChampionshipState.PREPARING);
-                case "start" -> transition(sender,args,ChampionshipState.RUNNING);
-                case "finish" -> transition(sender,args,ChampionshipState.FINISHED);
-                case "cancel" -> transition(sender,args,ChampionshipState.CANCELLED);
-                case "list" -> async(sender,service.championships(),list -> { if(list.isEmpty()) info(sender,"Nenhum campeonato."); else list.forEach(c -> info(sender,c.id()+" — "+c.name()+" ["+c.state()+"]")); });
-                case "join" -> { player(sender); require(args,2,"/arena join <campeonato> [equipe]"); Player p=(Player)sender; async(sender,service.registerPlayer(args[1],p.getUniqueId(),p.getName(),args.length>2?args[2]:null),v -> ok(sender,"Inscrição registrada.")); }
-                case "score" -> score(sender,args);
-                case "ranking" -> { require(args,2,"/arena ranking <campeonato>"); async(sender,service.ranking(args[1],rankingLimit),ranking -> { info(sender,"Ranking — "+args[1]); for(int i=0;i<ranking.size();i++) info(sender,(i+1)+". "+ranking.get(i).playerName()+" — "+ranking.get(i).points()+" pts"); }); }
-                default -> help(sender);
-            }
-        } catch(IllegalArgumentException | IllegalStateException e) { error(sender,e.getMessage()); }
-        return true;
-    }
-
-    private void transition(CommandSender sender,String[] args,ChampionshipState state) { admin(sender); require(args,2,"/arena "+args[0]+" <id>"); async(sender,service.transition(args[1],state),c -> ok(sender,"Estado atualizado: "+c.state())); }
-    private void score(CommandSender sender,String[] args) { admin(sender); require(args,6,"/arena score <campeonato> <jogador> <pontos> <origem> <evento-id>"); UUID id; try { id=UUID.fromString(args[2]); } catch(IllegalArgumentException e) { Player p=Bukkit.getPlayerExact(args[2]); if(p==null) throw new IllegalArgumentException("Jogador offline: use o UUID"); id=p.getUniqueId(); } int points=Integer.parseInt(args[3]); async(sender,service.awardPoints(args[1],id,points,args[4],args[5]),inserted -> { if(inserted) ok(sender,"Pontuação registrada."); else error(sender,"Evento duplicado; nenhum ponto foi adicionado."); }); }
-    private <T> void async(CommandSender sender,java.util.concurrent.CompletableFuture<T> future,Consumer<T> success) { future.whenComplete((value,failure) -> Bukkit.getScheduler().runTask(plugin,() -> { if(failure!=null) error(sender,root(failure).getMessage()); else success.accept(value); })); }
-    private Throwable root(Throwable t) { while((t instanceof CompletionException) && t.getCause()!=null) t=t.getCause(); return t; }
-    private void admin(CommandSender s) { if(!s.hasPermission("arena.admin")) throw new IllegalStateException("Sem permissão: arena.admin"); }
-    private void player(CommandSender s) { if(!(s instanceof Player)) throw new IllegalStateException("Comando exclusivo para jogadores"); if(!s.hasPermission("arena.play")) throw new IllegalStateException("Sem permissão: arena.play"); }
-    private void require(String[] a,int n,String usage) { if(a.length<n) throw new IllegalArgumentException("Uso: "+usage); }
-    private void help(CommandSender s) { info(s,"/arena create|prepare|start|finish|cancel|list|join|score|ranking"); }
-    private void ok(CommandSender s,String m) { s.sendMessage(Component.text(m,NamedTextColor.GREEN)); }
-    private void info(CommandSender s,String m) { s.sendMessage(Component.text(m,NamedTextColor.GOLD)); }
-    private void error(CommandSender s,String m) { s.sendMessage(Component.text(m==null?"Erro interno":m,NamedTextColor.RED)); }
-    @Override public List<String> onTabComplete(CommandSender s,Command c,String a,String[] args) { if(args.length==1) return List.of("help","list","join","ranking","create","prepare","start","finish","cancel","score").stream().filter(x->x.startsWith(args[0].toLowerCase())).toList(); return List.of(); }
+public final class ArenaCommand implements CommandExecutor,TabCompleter {
+    private final Plugin plugin;private final ArenaService arena;private final ChampionshipManager championships;private final MatchManager matches;private final PlayerSessionManager sessions;private final int rankingLimit;
+    public ArenaCommand(Plugin plugin,ArenaService arena,ChampionshipManager championships,MatchManager matches,PlayerSessionManager sessions,int rankingLimit){this.plugin=plugin;this.arena=arena;this.championships=championships;this.matches=matches;this.sessions=sessions;this.rankingLimit=rankingLimit;}
+    @Override public boolean onCommand(CommandSender sender,Command command,String label,String[] args){if(args.length==0||args[0].equalsIgnoreCase("help")){help(sender);return true;}try{switch(args[0].toLowerCase(Locale.ROOT)){
+        case "create"->{admin(sender);require(args,3,"/arena create <id> <nome>");async(sender,arena.createChampionship(args[1],join(args,2)),c->ok(sender,"Campeonato criado: "+c.id()));}
+        case "prepare"->legacyTransition(sender,args,ChampionshipState.PREPARING);case "start"->legacyTransition(sender,args,ChampionshipState.RUNNING);case "pause"->legacyTransition(sender,args,ChampionshipState.PAUSED);case "resume"->legacyTransition(sender,args,ChampionshipState.RUNNING);case "finish"->{admin(sender);require(args,2,"/arena finish <id>");async(sender,championships.finish(args[1],actor(sender)),winner->ok(sender,"Campeonato finalizado. Campeão: "+winner));}case "cancel"->legacyTransition(sender,args,ChampionshipState.CANCELLED);
+        case "list"->async(sender,arena.championships(),list->{if(list.isEmpty())info(sender,"Nenhum campeonato.");else list.forEach(c->info(sender,c.id()+" — "+c.name()+" ["+c.state()+"]"));});
+        case "join"->{player(sender);require(args,2,"/arena join <campeonato> [equipe]");Player p=(Player)sender;async(sender,arena.registerPlayer(args[1],p.getUniqueId(),p.getName(),args.length>2?args[2]:null),v->ok(sender,"Inscrição registrada."));}
+        case "register"->{admin(sender);require(args,4,"/arena register <campeonato> <uuid> <nome> [equipe]");UUID id=UUID.fromString(args[2]);async(sender,arena.registerPlayer(args[1],id,args[3],args.length>4?args[4]:null),v->ok(sender,"Participante inscrito."));}
+        case "score"->score(sender,args);case "ranking"->ranking(sender,args);case "champ"->champ(sender,args);case "team"->team(sender,args);case "match"->match(sender,args);default->help(sender);
+    }}catch(IllegalArgumentException|IllegalStateException e){error(sender,e.getMessage());}return true;}
+    private void champ(CommandSender s,String[] a){admin(s);require(a,2,"/arena champ <create|details>");switch(a[1].toLowerCase(Locale.ROOT)){case "create"->{require(a,6,"/arena champ create <id> <individual|teams> <gamesCSV> <nome>");ChampionshipMode mode=ChampionshipMode.valueOf(a[3].toUpperCase(Locale.ROOT));List<String>games=List.of(a[4].split(","));async(s,championships.create(a[2],join(a,5),mode,games,TieBreaker.MOST_WINS,actor(s)),d->ok(s,"Campeonato completo criado: "+d.id()));}case "details"->{require(a,3,"/arena champ details <id>");async(s,championships.details(a[2]),d->info(s,d.id()+" modo="+d.mode()+" rodada="+d.currentRound()+" jogos="+String.join(",",d.minigames())+" campeão="+d.championId()));}default->throw new IllegalArgumentException("Subcomando champ inválido");}}
+    private void team(CommandSender s,String[] a){admin(s);require(a,2,"/arena team <create|assign|ranking>");switch(a[1].toLowerCase(Locale.ROOT)){case "create"->{require(a,5,"/arena team create <campeonato> <id> <nome>");async(s,championships.createTeam(a[2],a[3],join(a,4),actor(s)),t->ok(s,"Equipe criada: "+t.id()));}case "assign"->{require(a,5,"/arena team assign <campeonato> <uuid> <equipe>");async(s,championships.assignTeam(a[2],UUID.fromString(a[3]),a[4],actor(s)),v->ok(s,"Participante atribuído."));}case "ranking"->{require(a,3,"/arena team ranking <campeonato>");async(s,championships.teamRanking(a[2],rankingLimit),rows->{for(int i=0;i<rows.size();i++){var r=rows.get(i);info(s,(i+1)+". "+r.teamName()+" — "+r.points()+" pts, "+r.wins()+" vitórias");}});}default->throw new IllegalArgumentException("Subcomando team inválido");}}
+    private void match(CommandSender s,String[] a){admin(s);require(a,2,"/arena match <create|prepare|countdown|start|finish|cancel|status|list|restart|abandon>");String sub=a[1].toLowerCase(Locale.ROOT);switch(sub){case "create"->{require(a,8,"/arena match create <id> <camp> <round> <game> <arena> <uuidCSV>");List<UUID>players=Arrays.stream(a[7].split(",")).map(UUID::fromString).toList();async(s,matches.create(a[2],a[3],Integer.parseInt(a[4]),a[5],a[6],players,true,Instant.now(),actor(s)),m->ok(s,"Partida criada: "+m.id()));}case "prepare"->matchTransition(s,a,MatchState.PREPARING,null);case "countdown"->matchTransition(s,a,MatchState.COUNTDOWN,null);case "start"->{require(a,3,"/arena match start <id>");async(s,matches.match(a[2]),m->{m.participants().forEach(id->{Player p=Bukkit.getPlayer(id);if(p!=null)sessions.capture(p);});async(s,matches.transition(a[2],MatchState.RUNNING,actor(s),null),started->ok(s,"Partida iniciada: "+started.id()));});}case "cancel"->{require(a,3,"/arena match cancel <id> [motivo]");matchTransition(s,a,MatchState.CANCELLED,a.length>3?join(a,3):"cancelamento administrativo");restoreAfter(s,a[2]);}case "finish"->finishMatch(s,a);case "status"->{require(a,3,"/arena match status <id>");async(s,matches.match(a[2]),m->info(s,m.id()+" ["+m.state()+"] jogo="+m.minigame()+" arena="+m.arena()+" jogadores="+m.participants().size()+" duração="+m.duration()));}case "list"->{require(a,3,"/arena match list <campeonato>");async(s,matches.calendar(a[2]),list->list.forEach(m->info(s,"#"+m.round()+" "+m.id()+" "+m.minigame()+" ["+m.state()+"]")));}case "restart"->{require(a,4,"/arena match restart <antiga> <nova>");async(s,matches.restartRound(a[2],a[3],actor(s)),m->ok(s,"Rodada reiniciada sem reaplicar resultado: "+m.id()));}case "abandon"->{require(a,4,"/arena match abandon <id> <uuid>");async(s,matches.abandon(a[2],UUID.fromString(a[3]),actor(s)),v->ok(s,"Abandono registrado."));}default->throw new IllegalArgumentException("Subcomando match inválido");}}
+    private void finishMatch(CommandSender s,String[] a){require(a,5,"/arena match finish <id> <result-id> <uuid:points[:team],...>");List<ResultEntry>entries=new ArrayList<>();int position=1;for(String token:a[4].split(",")){String[]p=token.split(":");entries.add(new ResultEntry(UUID.fromString(p[0]),p.length>2?p[2]:null,position,Integer.parseInt(p[1]),position==1));position++;}boolean tie=entries.size()>1&&entries.get(0).points()==entries.get(1).points();MatchResult result=new MatchResult(a[3],a[2],entries,tie,Instant.now());async(s,matches.finish(a[2],result,actor(s)),inserted->{if(inserted){ok(s,"Resultado oficial registrado.");restoreAfter(s,a[2]);}else error(s,"Resultado duplicado ou partida não executando.");});}
+    private void restoreAfter(CommandSender s,String id){async(s,matches.match(id),m->m.participants().forEach(uuid->{Player p=Bukkit.getPlayer(uuid);if(p!=null)sessions.restore(p,true);}));}
+    private void matchTransition(CommandSender s,String[]a,MatchState next,String reason){require(a,3,"/arena match "+a[1]+" <id>");async(s,matches.transition(a[2],next,actor(s),reason),m->ok(s,"Partida agora está "+m.state()));}
+    private void ranking(CommandSender s,String[]a){require(a,2,"/arena ranking <campeonato>");async(s,arena.ranking(a[1],rankingLimit),rows->{info(s,"Ranking — "+a[1]);for(int i=0;i<rows.size();i++)info(s,(i+1)+". "+rows.get(i).playerName()+" — "+rows.get(i).points()+" pts");});}
+    private void score(CommandSender s,String[]a){admin(s);require(a,6,"/arena score <camp> <jogador> <pontos> <origem> <event-id>");UUID id;try{id=UUID.fromString(a[2]);}catch(IllegalArgumentException e){Player p=Bukkit.getPlayerExact(a[2]);if(p==null)throw new IllegalArgumentException("Jogador offline: use UUID");id=p.getUniqueId();}async(s,championships.administrativeScore(a[1],id,Integer.parseInt(a[3]),a[4],a[5],actor(s)),inserted->{if(inserted)ok(s,"Pontuação registrada e auditada.");else error(s,"Evento duplicado.");});}
+    private void legacyTransition(CommandSender s,String[]a,ChampionshipState state){admin(s);require(a,2,"/arena "+a[0]+" <id>");async(s,championships.transition(a[1],state,actor(s)),c->ok(s,"Estado atualizado: "+c.state()));}
+    private <T>void async(CommandSender s,CompletableFuture<T>f,Consumer<T>success){f.whenComplete((v,e)->Bukkit.getScheduler().runTask(plugin,()->{if(e!=null)error(s,root(e).getMessage());else success.accept(v);}));}
+    private Throwable root(Throwable t){while(t instanceof CompletionException&&t.getCause()!=null)t=t.getCause();return t;}private String actor(CommandSender s){return s.getName();}private String join(String[]a,int from){return String.join(" ",Arrays.copyOfRange(a,from,a.length));}private void admin(CommandSender s){if(!s.hasPermission("arena.admin"))throw new IllegalStateException("Sem permissão: arena.admin");}private void player(CommandSender s){if(!(s instanceof Player)||!s.hasPermission("arena.play"))throw new IllegalStateException("Comando exclusivo para jogadores autorizados");}private void require(String[]a,int n,String usage){if(a.length<n)throw new IllegalArgumentException("Uso: "+usage);}private void help(CommandSender s){info(s,"/arena champ|team|match|register|ranking — consulte o README");}private void ok(CommandSender s,String m){s.sendMessage(Component.text(m,NamedTextColor.GREEN));}private void info(CommandSender s,String m){s.sendMessage(Component.text(m,NamedTextColor.GOLD));}private void error(CommandSender s,String m){s.sendMessage(Component.text(m==null?"Erro interno":m,NamedTextColor.RED));}
+    @Override public List<String>onTabComplete(CommandSender s,Command c,String alias,String[]a){if(a.length==1)return List.of("help","list","join","ranking","champ","team","match","register","create","prepare","start","pause","resume","finish","cancel","score").stream().filter(x->x.startsWith(a[0].toLowerCase())).toList();if(a.length==2&&a[0].equalsIgnoreCase("match"))return List.of("create","prepare","countdown","start","finish","cancel","status","list","restart","abandon");if(a.length==2&&a[0].equalsIgnoreCase("team"))return List.of("create","assign","ranking");return List.of();}
 }

@@ -1,17 +1,22 @@
 package com.arenashowdown.core;
 
 import com.arenashowdown.api.ArenaApi;
+import com.arenashowdown.api.OrchestrationApi;
 import com.arenashowdown.core.command.ArenaCommand;
 import com.arenashowdown.core.persistence.*;
-import com.arenashowdown.core.service.ArenaService;
+import com.arenashowdown.core.player.*;
+import com.arenashowdown.core.service.*;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.nio.file.Path;
+import java.util.concurrent.*;
 
 public final class ArenaCorePlugin extends JavaPlugin {
     private Database database;
     private ArenaService service;
     private SqliteBackupService backupService;
+    private ExecutorService databaseExecutor;
+    private MatchManager matchManager;
 
     @Override public void onEnable() {
         saveDefaultConfig();
@@ -21,10 +26,19 @@ public final class ArenaCorePlugin extends JavaPlugin {
         saveBundledYaml("scoring.yml");
         try {
             database = createDatabase();
-            service = new ArenaService(new JdbcArenaRepository(database));
+            databaseExecutor = Executors.newFixedThreadPool(4, Thread.ofPlatform().name("arena-db-", 0).factory());
+            ArenaRepository arenaRepository = new JdbcArenaRepository(database);
+            OrchestrationRepository orchestrationRepository = new JdbcOrchestrationRepository(database);
+            service = new ArenaService(arenaRepository, databaseExecutor);
+            ChampionshipManager championshipManager = new ChampionshipManager(arenaRepository, orchestrationRepository, databaseExecutor);
+            matchManager = new MatchManager(orchestrationRepository, databaseExecutor, action -> getServer().getScheduler().runTask(this, action), new YamlScorePolicy(getDataFolder().toPath().resolve("scoring.yml").toFile()));
+            ArenaOrchestrationService orchestrationApi = new ArenaOrchestrationService(matchManager);
             backupService = new SqliteBackupService(database);
             getServer().getServicesManager().register(ArenaApi.class, service, this, ServicePriority.Normal);
-            ArenaCommand command = new ArenaCommand(this, service, getConfig().getInt("ranking.default-limit", 10));
+            getServer().getServicesManager().register(OrchestrationApi.class, orchestrationApi, this, ServicePriority.Normal);
+            PlayerSessionManager sessions = new PlayerSessionManager();
+            getServer().getPluginManager().registerEvents(new ParticipantListener(this, matchManager), this);
+            ArenaCommand command = new ArenaCommand(this, service, championshipManager, matchManager, sessions, getConfig().getInt("ranking.default-limit", 10));
             var pluginCommand = getCommand("arena");
             if (pluginCommand == null) throw new IllegalStateException("Comando arena ausente do plugin.yml");
             pluginCommand.setExecutor(command);

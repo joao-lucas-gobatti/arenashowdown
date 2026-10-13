@@ -1,8 +1,18 @@
 # Valores padrão externos ao código. Os plugins de minigame devem usar event-id único.
 scoring:
+  # Quando false, o ArenaCore substitui pontos enviados pelo minigame pelos valores abaixo.
+  use-result-points: false
   participation: 0
   positions:
     first: 10
     second: 7
     third: 5
+  minigames:
+    parkour:
+      positions: {1: 10, 2: 7, 3: 5}
+    skywars:
+      positions: {1: 10, 2: 7, 3: 5}
+    tnt-run:
+      positions: {1: 10, 2: 7, 3: 5}
+  tie-breaker: MOST_WINS
   allow-negative-points: true
