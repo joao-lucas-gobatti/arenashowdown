@@ -1,5 +1,5 @@
 name: ArenaLobby
-version: '0.4.0-SNAPSHOT'
+version: '0.4.1-SNAPSHOT'
 main: com.arenashowdown.lobby.ArenaLobbyPlugin
 api-version: '1.21.11'
 depend: [ArenaCore]
@@ -8,8 +8,9 @@ authors: [Arena Showdown]
 description: Experiencia visual integrada ao lobby existente
 commands:
   lobby:
-    description: Consulta e administra o lobby
+    description: Retorna ao lobby e administra sua experiencia
     usage: /lobby help
+    aliases: [l, hub]
 permissions:
   arena.lobby.admin:
     description: Configura o ArenaLobby e inicia rodadas

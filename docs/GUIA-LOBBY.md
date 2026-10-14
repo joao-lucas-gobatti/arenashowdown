@@ -4,7 +4,8 @@ Compile com `./gradlew.bat build --no-parallel`, copie `arena-lobby/build/libs/A
 
 ## Comandos
 
-- `/lobby` ou `/lobby menu`: GUI dos oito minigames.
+- `/lobby`, `/l` ou `/hub`: retorna ao spawn persistente configurado.
+- `/lobby menu`: abre a GUI de 54 slots com os oito minigames.
 - `/lobby setspawn` e `/lobby spawn`.
 - `/lobby setchampionship <id>`.
 - `/lobby hologram create <id> <ranking|championship|last>`; `move <id>`; `remove <id>`.

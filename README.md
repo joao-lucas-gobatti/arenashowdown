@@ -2,6 +2,8 @@
 
 > A Entrega 4 adiciona `arena-lobby`: scoreboard, hologramas, GUI, interações e proteções no mapa existente, sem regenerá-lo. Consulte [docs/GUIA-LOBBY.md](docs/GUIA-LOBBY.md).
 
+Na versao 4.1, `/lobby`, `/l` e `/hub` retornam ao spawn; `/lobby menu` abre a GUI de 54 slots. O lobby tambem fornece hotbar por PDC, scoreboard lateral e TAB nativa. Consulte [docs/GUIA-TESTES-LOBBY.md](docs/GUIA-TESTES-LOBBY.md).
+
 Plataforma modular de campeonatos para Paper 1.21.11 e Java 21. O repositório contém o `ArenaCore`, a API pública e o primeiro minigame jogável, `ArenaParkour`.
 
 ## Build e instalação

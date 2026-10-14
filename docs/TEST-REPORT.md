@@ -106,3 +106,13 @@ Data: 13/10/2026.
 - Hologramas são reconstruídos da configuração sem entidades persistentes, evitando duplicação.
 - O campeonato padrão `principal` não existe no banco de teste; o plugin permaneceu ativo e agora suprime avisos repetidos.
 - GUI, scoreboard com jogador, corrida completa e estética ainda exigem validação manual no cliente.
+
+## Entrega 4.1 — navegacao e interface (14/10/2026)
+
+- Dois testes JUnit aprovados: bloqueio de retorno em partida ativa e liberação após partida finalizada, usando os modelos reais da ArenaAPI.
+- Build `:arena-lobby:test :arena-lobby:build` aprovado em Java 21.
+- Boot isolado no Paper 1.21.11, porta 25568: ArenaLobby 0.4.1, ArenaCore e ArenaParkour habilitados; mundo existente carregado sem geracao.
+- `/lobby`, `/l` e `/hub` registrados; `/lobby status` confirmou mundo e Parkour; `/lobby reload` concluiu sem registrar outra tarefa; desligamento limpo.
+- Nenhum conflito de alias foi reportado pelos plugins instalados na instancia isolada.
+- O servidor principal permaneceu online e seu JAR nao foi substituido, em respeito a proibicao de encerrar servidores sem aprovacao.
+- GUI, hotbar, scoreboard, TAB e fluxo Parkour precisam de cliente Minecraft para validacao visual/interativa; nao foram declarados aprovados visualmente.
