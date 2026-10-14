@@ -1,0 +1,24 @@
+world: cassino_lobby_v2
+championship: principal
+spawn: {}
+refresh-seconds: 5
+scoreboard:
+  enabled: true
+  title: "&6&lARENA SHOWDOWN"
+  entries: 5
+protection:
+  blocks: true
+  damage: true
+  entities: true
+  fire: true
+minigames:
+  corrida: {name: "Corrida", icon: FEATHER, enabled: false, arena: "", max-points: 10}
+  skywars: {name: "SkyWars", icon: IRON_SWORD, enabled: false, arena: "", max-points: 10}
+  battle-royale: {name: "Battle Royale", icon: NETHERITE_SWORD, enabled: false, arena: "", max-points: 10}
+  desafio-de-sorte: {name: "Desafio de Sorte", icon: AMETHYST_SHARD, enabled: false, arena: "", max-points: 10}
+  parkour: {name: "Parkour", icon: RABBIT_FOOT, enabled: true, arena: parkour-test, max-points: 10}
+  roube-a-bandeira: {name: "Roube a Bandeira", icon: RED_BANNER, enabled: false, arena: "", max-points: 10}
+  csgo: {name: "CSGO", icon: CROSSBOW, enabled: false, arena: "", max-points: 10}
+  tnt-run: {name: "TNT Run", icon: TNT, enabled: false, arena: "", max-points: 10}
+holograms: {}
+interactions: {}

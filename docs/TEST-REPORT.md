@@ -97,3 +97,12 @@ Data: 13/10/2026.
 - Não houve dois clientes reais conectados; teleporte, scoreboard, sons, partículas e corrida completa precisam de teste manual.
 - `buildtest` e seleção de regiões exigem jogador e não foram executados pelo console.
 - A recuperação persistente de snapshot foi implementada, mas uma queda abrupta com cliente real ainda não foi reproduzida.
+
+## Entrega 4 — ArenaLobby (14/10/2026)
+
+- Build completo aprovado em Java 21.
+- Boot isolado no Paper 1.21.11, porta 25568: os três plugins habilitaram, `cassino_lobby_v2` carregou, `/plugins` e `/lobby status` passaram e o desligamento foi limpo.
+- O teste usou cópia do mundo; nenhum gerador ou escrita de blocos foi executado.
+- Hologramas são reconstruídos da configuração sem entidades persistentes, evitando duplicação.
+- O campeonato padrão `principal` não existe no banco de teste; o plugin permaneceu ativo e agora suprime avisos repetidos.
+- GUI, scoreboard com jogador, corrida completa e estética ainda exigem validação manual no cliente.

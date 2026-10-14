@@ -1,5 +1,7 @@
 # Arena Showdown
 
+> A Entrega 4 adiciona `arena-lobby`: scoreboard, hologramas, GUI, interações e proteções no mapa existente, sem regenerá-lo. Consulte [docs/GUIA-LOBBY.md](docs/GUIA-LOBBY.md).
+
 Plataforma modular de campeonatos para Paper 1.21.11 e Java 21. O repositório contém o `ArenaCore`, a API pública e o primeiro minigame jogável, `ArenaParkour`.
 
 ## Build e instalação

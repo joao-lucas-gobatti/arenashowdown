@@ -1,0 +1,19 @@
+name: ArenaLobby
+version: '0.4.0-SNAPSHOT'
+main: com.arenashowdown.lobby.ArenaLobbyPlugin
+api-version: '1.21.11'
+depend: [ArenaCore]
+softdepend: [ArenaParkour]
+authors: [Arena Showdown]
+description: Experiencia visual integrada ao lobby existente
+commands:
+  lobby:
+    description: Consulta e administra o lobby
+    usage: /lobby help
+permissions:
+  arena.lobby.admin:
+    description: Configura o ArenaLobby e inicia rodadas
+    default: op
+  arena.lobby.use:
+    description: Usa menus e consultas do lobby
+    default: true
