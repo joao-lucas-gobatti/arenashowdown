@@ -1,0 +1,20 @@
+name: ArenaTNTRun
+version: '0.1.0-SNAPSHOT'
+main: com.arenashowdown.tntrun.ArenaTNTRunPlugin
+api-version: '1.21.11'
+depend: [ArenaCore]
+description: TNT Run integrado à OrchestrationApi
+commands:
+  tntrun:
+    description: Administração e espectadores do TNT Run
+    usage: /tntrun help
+permissions:
+  arenatntrun.admin:
+    description: Configurar arenas, cancelar partidas e recuperar estado
+    default: op
+  arenatntrun.spectate:
+    description: Assistir à partida ativa
+    default: true
+  arenatntrun.leave:
+    description: Sair ou abandonar uma partida
+    default: true
