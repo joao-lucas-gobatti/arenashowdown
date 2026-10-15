@@ -1,0 +1,12 @@
+name: ArenaTNTRunVerification
+version: '0.1.0-SNAPSHOT'
+main: com.arenashowdown.tntrun.verification.PaperVerificationPlugin
+api-version: '1.21.11'
+depend: [ArenaCore, ArenaTNTRun]
+commands:
+  tntrunverify:
+    description: Test-only verification, restricted to isolated server
+    permission: arenatntrun.verify
+permissions:
+  arenatntrun.verify:
+    default: op

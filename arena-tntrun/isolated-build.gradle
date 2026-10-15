@@ -2,4 +2,5 @@
 gradle.projectsLoaded {
     rootProject.layout.buildDirectory.set(rootProject.file('arena-tntrun/.work/root-build'))
     rootProject.project(':arena-api').layout.buildDirectory.set(rootProject.file('arena-tntrun/.work/api-build'))
+    rootProject.project(':arena-core').layout.buildDirectory.set(rootProject.file('arena-tntrun/.work/core-build'))
 }
