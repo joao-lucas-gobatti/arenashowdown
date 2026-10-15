@@ -146,6 +146,7 @@ final class FakePaper {
         Human(UUID id) {
             this.id=id;
             state.put("GameMode",GameMode.CREATIVE); state.put("Health",17d); state.put("FoodLevel",13); state.put("Saturation",4f); state.put("Exhaustion",1f);
+            state.put("AbsorptionAmount",5d); state.put("Sprinting",true); state.put("Sneaking",true); state.put("Swimming",false); state.put("Gliding",false);
             state.put("Level",7); state.put("Exp",.3f); state.put("TotalExperience",99); state.put("AllowFlight",true); state.put("Flying",true);
             state.put("Collidable",true); state.put("Invulnerable",false); state.put("Gravity",true); state.put("WalkSpeed",.3f); state.put("FlySpeed",.2f);
             state.put("FireTicks",10); state.put("FreezeTicks",5); state.put("FallDistance",2f); state.put("Velocity",new Vector(.1,.2,.3)); state.put("Scoreboard",main);
@@ -167,6 +168,7 @@ final class FakePaper {
                 case "isDead","isGliding" -> false;
                 case "getMaxHealth" -> 20d;
                 case "getInventory" -> inventory;
+                case "hasPermission" -> state.getOrDefault("Permission",false);
                 case "getActivePotionEffects" -> List.of();
                 case "hasGravity" -> state.get("Gravity");
                 case "teleport" -> { location=((Location)a[0]).clone(); teleports++; yield true; }

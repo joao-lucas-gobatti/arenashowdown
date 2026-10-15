@@ -322,6 +322,7 @@ public final class TntRunAdapter implements MinigameAdapter {
         p.setHealth(Math.min(20,p.getMaxHealth())); p.setFoodLevel(20); p.setSaturation(20); p.setExhaustion(0);
         p.setFireTicks(0); p.setFreezeTicks(0); p.setFallDistance(0); p.setVelocity(new org.bukkit.util.Vector());
         p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType()));
+        p.setAbsorptionAmount(0); p.setSprinting(false); p.setSneaking(false); p.setSwimming(false); p.setGliding(false);
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         updateBoard(p);
     }

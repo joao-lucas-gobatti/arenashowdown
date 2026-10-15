@@ -1,0 +1,43 @@
+package com.arenashowdown.tntrun;
+
+import com.arenashowdown.api.OrchestrationApi;
+import com.arenashowdown.tntrun.arena.ArenaStore;
+import com.arenashowdown.tntrun.persistence.*;
+import org.bukkit.Location;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class CommandPermissionsTest {
+    @TempDir Path temp;
+    @Test void unauthorizedCommandsCannotWriteArenaDefinitionsOrCreateSpectatorSnapshots() throws Exception {
+        FakePaper paper=new FakePaper(); var p=paper.human(1); ArenaStore store=new ArenaStore(temp.resolve("arenas")); store.reload();
+        TntRunCommand cmd=command(paper,store);
+        cmd.onCommand(p.player,null,"tntrun",new String[]{"create","arena"});
+        cmd.onCommand(p.player,null,"tntrun",new String[]{"spectate"});
+        assertFalse(Files.exists(store.directory().resolve("arena.draft"))); assertFalse(Files.exists(temp.resolve("recovery/players")));
+        assertEquals(java.util.List.of("help"),cmd.onTabComplete(p.player,null,"tntrun",new String[]{""}));
+    }
+    @Test void authorizedDraftCreationNeverOverwritesExistingDraftAndRejectsTraversal() throws Exception {
+        FakePaper paper=new FakePaper(); var p=paper.human(1); p.state.put("Permission",true);
+        ArenaStore store=new ArenaStore(temp.resolve("arenas")); store.reload(); TntRunCommand cmd=command(paper,store);
+        cmd.onCommand(p.player,null,"tntrun",new String[]{"create","arena"}); Path file=store.directory().resolve("arena.draft"); byte[] before=Files.readAllBytes(file);
+        p.location=new Location(paper.world,99,90,99); cmd.onCommand(p.player,null,"tntrun",new String[]{"create","arena"});
+        assertArrayEquals(before,Files.readAllBytes(file)); assertTrue(store.all().isEmpty());
+        cmd.onCommand(p.player,null,"tntrun",new String[]{"create","../escape"}); assertFalse(Files.exists(temp.resolve("escape.draft")));
+    }
+    @Test void invalidSaveLeavesDraftForRepairAndDoesNotActivateArena() throws Exception {
+        FakePaper paper=new FakePaper(); var p=paper.human(1); p.state.put("Permission",true);
+        ArenaStore store=new ArenaStore(temp.resolve("arenas")); store.reload(); TntRunCommand cmd=command(paper,store);
+        cmd.onCommand(p.player,null,"tntrun",new String[]{"create","arena"}); cmd.onCommand(p.player,null,"tntrun",new String[]{"save","arena"});
+        assertTrue(Files.exists(store.directory().resolve("arena.draft"))); assertFalse(Files.exists(store.directory().resolve("arena.yml"))); assertTrue(store.all().isEmpty());
+    }
+    private TntRunCommand command(FakePaper paper,ArenaStore arenas) throws Exception {
+        var plugin=paper.plugin(temp); var recovery=temp.resolve("recovery");
+        var api=FakePaper.proxy(OrchestrationApi.class,(m,a) -> null);
+        var game=new TntRunAdapter(plugin,api,arenas,new BlockJournal(recovery),new PlayerSnapshots(recovery.resolve("players")),new ResultOutbox(recovery));
+        // Command implementation uses JavaPlugin only for config; Plugin is sufficient for testing.
+        return new TntRunCommand(plugin,arenas,game);
+    }
+}

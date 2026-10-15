@@ -29,10 +29,12 @@ public final class PlayerSnapshots {
         y.set("schema",1); y.set("uuid",p.getUniqueId().toString()); y.set("world",p.getWorld().getUID().toString());
         y.set("x",l.getX()); y.set("y",l.getY()); y.set("z",l.getZ()); y.set("yaw",l.getYaw()); y.set("pitch",l.getPitch());
         y.set("mode",p.getGameMode().name()); y.set("health",p.getHealth()); y.set("food",p.getFoodLevel());
+        y.set("absorption",p.getAbsorptionAmount());
         y.set("saturation",p.getSaturation()); y.set("exhaustion",p.getExhaustion());
         y.set("level",p.getLevel()); y.set("exp",p.getExp()); y.set("total-exp",p.getTotalExperience());
         y.set("allow-flight",p.getAllowFlight()); y.set("flying",p.isFlying()); y.set("collidable",p.isCollidable());
         y.set("invulnerable",p.isInvulnerable()); y.set("gravity",p.hasGravity());
+        y.set("sprinting",p.isSprinting()); y.set("sneaking",p.isSneaking()); y.set("swimming",p.isSwimming()); y.set("gliding",p.isGliding());
         y.set("walk-speed",p.getWalkSpeed()); y.set("fly-speed",p.getFlySpeed());
         y.set("fire",p.getFireTicks()); y.set("freeze",p.getFreezeTicks()); y.set("fall",p.getFallDistance());
         y.set("velocity",List.of(p.getVelocity().getX(),p.getVelocity().getY(),p.getVelocity().getZ()));
@@ -49,12 +51,12 @@ public final class PlayerSnapshots {
         if (!pending(p.getUniqueId())) return true;
         YamlConfiguration y = ArenaStore.read(file(p.getUniqueId()));
         if (y.getInt("schema") != 1 || !p.getUniqueId().toString().equals(y.getString("uuid"))) throw new IllegalStateException("Invalid player snapshot");
-        for (String key : List.of("x","y","z","yaw","pitch","health","food","saturation","exhaustion","level","exp","total-exp","walk-speed","fly-speed","fire","freeze","fall","held-slot"))
+        for (String key : List.of("x","y","z","yaw","pitch","health","absorption","food","saturation","exhaustion","level","exp","total-exp","walk-speed","fly-speed","fire","freeze","fall","held-slot"))
             if (!(y.get(key) instanceof Number n) || !Double.isFinite(n.doubleValue())) throw new IllegalStateException("Invalid snapshot field: " + key);
-        for (String key : List.of("allow-flight","flying","collidable","invulnerable","gravity","board.main"))
+        for (String key : List.of("allow-flight","flying","collidable","invulnerable","gravity","sprinting","sneaking","swimming","gliding","board.main"))
             if (!(y.get(key) instanceof Boolean)) throw new IllegalStateException("Missing snapshot boolean: " + key);
         if (!y.isList("inventory") || !y.isList("effects") || y.getStringList("inventory").size() != p.getInventory().getSize()
-                || y.getDouble("health") <= 0 || y.getInt("food") < 0 || y.getInt("food") > 20 || y.getInt("held-slot") < 0 || y.getInt("held-slot") > 8)
+                || y.getDouble("health") <= 0 || y.getDouble("absorption") < 0 || y.getInt("food") < 0 || y.getInt("food") > 20 || y.getInt("held-slot") < 0 || y.getInt("held-slot") > 8)
             throw new IllegalStateException("Truncated snapshot");
         World w = Bukkit.getWorld(UUID.fromString(y.getString("world")));
         if (w == null) return false;
@@ -75,15 +77,18 @@ public final class PlayerSnapshots {
         if (!p.teleport(new Location(w,y.getDouble("x"),y.getDouble("y"),y.getDouble("z"),(float)y.getDouble("yaw"),(float)y.getDouble("pitch"))))
             return false;
         p.closeInventory(); p.setGameMode(mode); p.getInventory().setContents(inventory); p.getInventory().setHeldItemSlot(y.getInt("held-slot")); p.setItemOnCursor(cursor);
+        // Effects (e.g. HEALTH_BOOST) may change the maximum health used for clamping.
+        p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType())); p.addPotionEffects(effects);
         p.setHealth(Math.min(y.getDouble("health"),p.getMaxHealth())); p.setFoodLevel(y.getInt("food"));
+        p.setAbsorptionAmount(y.getDouble("absorption"));
         p.setSaturation((float)y.getDouble("saturation")); p.setExhaustion((float)y.getDouble("exhaustion"));
         p.setLevel(y.getInt("level")); p.setExp((float)y.getDouble("exp")); p.setTotalExperience(y.getInt("total-exp"));
         p.setAllowFlight(y.getBoolean("allow-flight")); p.setFlying(y.getBoolean("flying"));
         p.setCollidable(y.getBoolean("collidable")); p.setInvulnerable(y.getBoolean("invulnerable")); p.setGravity(y.getBoolean("gravity"));
+        p.setSprinting(y.getBoolean("sprinting")); p.setSneaking(y.getBoolean("sneaking")); p.setSwimming(y.getBoolean("swimming")); p.setGliding(y.getBoolean("gliding"));
         p.setWalkSpeed((float)y.getDouble("walk-speed")); p.setFlySpeed((float)y.getDouble("fly-speed"));
         p.setFireTicks(y.getInt("fire")); p.setFreezeTicks(y.getInt("freeze")); p.setFallDistance((float)y.getDouble("fall"));
         p.setVelocity(new Vector(velocity.get(0),velocity.get(1),velocity.get(2)));
-        p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType())); p.addPotionEffects(effects);
         p.setScoreboard(board);
         p.saveData(); // Durable inventory/state before consuming the recovery file.
         Files.delete(file(p.getUniqueId())); originalBoards.remove(p.getUniqueId()); return true;

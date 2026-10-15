@@ -7,18 +7,18 @@ import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import java.nio.file.*;
 import java.util.*;
 
 /** Edits YAML definitions only; never builds floors, creates worlds or edits Core storage. */
 public final class TntRunCommand implements CommandExecutor, TabCompleter {
-    private final JavaPlugin plugin;
+    private final Plugin plugin;
     private final ArenaStore arenas;
     private final TntRunAdapter game;
     private final Map<UUID,Location> first = new HashMap<>(), second = new HashMap<>();
     private static final List<String> ADMIN=List.of("list","status","reload","validate","create","pos1","pos2","bounds","layer","spawn","spectator","rules","materials","save","cancel","recover");
-    public TntRunCommand(JavaPlugin plugin,ArenaStore arenas,TntRunAdapter game) { this.plugin=plugin; this.arenas=arenas; this.game=game; }
+    public TntRunCommand(Plugin plugin,ArenaStore arenas,TntRunAdapter game) { this.plugin=plugin; this.arenas=arenas; this.game=game; }
     @Override public boolean onCommand(CommandSender s,Command c,String label,String[] a) {
         try {
             String sub=a.length==0 ? "help" : a[0].toLowerCase(Locale.ROOT);
