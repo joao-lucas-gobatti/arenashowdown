@@ -3,6 +3,7 @@ package com.arenashowdown.tntrun;
 import com.arenashowdown.api.OrchestrationApi;
 import com.arenashowdown.tntrun.arena.ArenaStore;
 import com.arenashowdown.tntrun.persistence.*;
+import com.arenashowdown.tntrun.configuration.PluginConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
@@ -11,13 +12,13 @@ public final class ArenaTNTRunPlugin extends JavaPlugin {
     private OrchestrationApi api;
     private boolean registered;
     @Override public void onEnable() {
-        saveDefaultConfig();
         api=getServer().getServicesManager().load(OrchestrationApi.class);
         if (api==null) { getLogger().severe("ArenaCore did not publish OrchestrationApi"); getServer().getPluginManager().disablePlugin(this); return; }
         try {
-            ArenaStore arenas=new ArenaStore(getDataFolder().toPath().resolve("arenas")); arenas.reload();
+            ArenaStore arenas=new ArenaStore(getDataFolder().toPath().resolve("arenas"));
+            PluginConfiguration configuration=new PluginConfiguration(getDataFolder().toPath(),arenas); configuration.initialize();
             var recovery=getDataFolder().toPath().resolve("recovery");
-            adapter=new TntRunAdapter(this,api,arenas,new BlockJournal(recovery),new PlayerSnapshots(recovery.resolve("players")),new ResultOutbox(recovery));
+            adapter=new TntRunAdapter(this,api,arenas,new BlockJournal(recovery),new PlayerSnapshots(recovery.resolve("players")),new ResultOutbox(recovery),configuration);
             TntRunCommand command=new TntRunCommand(this,arenas,adapter);
             var pc=Objects.requireNonNull(getCommand("tntrun")); pc.setExecutor(command); pc.setTabCompleter(command);
             getServer().getPluginManager().registerEvents(new TntRunListener(this,adapter),this);

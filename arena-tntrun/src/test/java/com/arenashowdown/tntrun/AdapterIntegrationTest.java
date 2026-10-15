@@ -5,6 +5,7 @@ import com.arenashowdown.api.minigame.MinigameContext;
 import com.arenashowdown.api.model.*;
 import com.arenashowdown.tntrun.arena.*;
 import com.arenashowdown.tntrun.persistence.*;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -160,5 +161,51 @@ class AdapterIntegrationTest {
         running(); game.quit(a.player); a.online=false; a.online=true; game.recoverJoin(a.player);
         assertEquals(GameMode.SPECTATOR,a.player.getGameMode()); assertTrue(snapshots.pending(a.id));
         paper.ticks(1); assertRestored();
+    }
+    @Test void successfulReloadChangesOnlyNextMatchesIncludingMessagesTimeoutAndRemovalDelay() throws Exception {
+        game.configuration().initialize();
+        var messages=ArenaStore.read(temp.resolve("messages.yml")); messages.set("start","OLD START"); messages.set("countdown","OLD {seconds}");
+        Files.writeString(temp.resolve("messages.yml"),messages.saveToString()); game.configuration().reload(); prepare();
+        var arena=ArenaStore.read(temp.resolve("arenas/teste.yml")); arena.set("timeout-seconds",5); arena.set("removal-delay-ticks",1);
+        Files.writeString(temp.resolve("arenas/teste.yml"),arena.saveToString()); messages.set("start","NEW START"); messages.set("countdown","NEW {seconds}");
+        Files.writeString(temp.resolve("messages.yml"),messages.saveToString());
+        // This is an actual administrative reload while COUNTDOWN is active.
+        a.state.put("Permission",true);
+        new TntRunCommand(paper.plugin(temp),arenas,game).onCommand(a.player,null,"tntrun",new String[]{"reload"});
+        paper.ticks(100); assertEquals(MatchState.COUNTDOWN,state); assertTrue(a.messages.contains(Component.text("OLD 5"))); assertFalse(a.messages.contains(Component.text("NEW 5")));
+        paper.ticks(1); assertTrue(a.messages.contains(Component.text("OLD START"))); paper.ticks(8); assertEquals("minecraft:sand",paper.at(3,75,3));
+        paper.ticks(1); assertEquals("minecraft:air",paper.at(3,75,3)); paper.ticks(91); assertEquals(MatchState.RUNNING,state);
+        a.location.setY(51); paper.ticks(1); assertEquals(MatchState.FINISHED,state); assertFalse(game.busy());
+        state=MatchState.PREPARING; submitted=null; prepare(); paper.ticks(101);
+        assertTrue(a.messages.contains(Component.text("NEW START"))); paper.ticks(1); assertEquals("minecraft:sand",paper.at(3,75,3));
+        paper.ticks(1); assertEquals("minecraft:air",paper.at(3,75,3)); paper.ticks(98); assertEquals(MatchState.FINISHED,state);
+    }
+    @Test void activeArenaKeepsProtectionEvenWhenReloadMovesItsDefinition() throws Exception {
+        game.configuration().initialize(); running(); var yaml=ArenaStore.read(temp.resolve("arenas/teste.yml"));
+        yaml.set("bounds.min-x",100); yaml.set("bounds.max-x",115);
+        for (String key : yaml.getConfigurationSection("layers").getKeys(false)) { yaml.set("layers."+key+".min-x",101); yaml.set("layers."+key+".max-x",114); }
+        yaml.set("spawns.0.x",103.5); yaml.set("spawns.1.x",111.5); yaml.set("spectator.x",108);
+        Files.writeString(temp.resolve("arenas/teste.yml"),yaml.saveToString()); game.configuration().reload();
+        assertTrue(game.protectedLocation(new Location(paper.world,3,75,3))); assertFalse(game.protectedLocation(new Location(paper.world,103,75,3)));
+        assertTrue(game.inside(a.location)); paper.ticks(9); assertEquals("minecraft:air",paper.at(3,75,3));
+        game.requestCancel("test"); paper.flush(); assertRestored();
+        assertFalse(game.protectedLocation(new Location(paper.world,3,75,3))); assertTrue(game.protectedLocation(new Location(paper.world,103,75,3)));
+    }
+    @Test void reloadWhileWaitingForTeamCallbackCannotReplacePreparationSnapshot() throws Exception {
+        game.configuration().initialize(); teamLoad=new CompletableFuture<>(); game.prepare(new MinigameContext(match()));
+        var yaml=ArenaStore.read(temp.resolve("arenas/teste.yml")); yaml.set("spawns.0.x",4.5); yaml.set("removal-delay-ticks",1);
+        Files.writeString(temp.resolve("arenas/teste.yml"),yaml.saveToString()); game.configuration().reload();
+        teamLoad.complete(List.of()); paper.flush(); assertEquals(3.5,a.location.getX());
+        paper.ticks(101); paper.ticks(8); assertEquals("minecraft:sand",paper.at(3,75,3));
+        game.requestCancel("test"); paper.flush(); assertRestored();
+    }
+    @Test void abilitySettingsHaveNoEffectsAndChampionshipChangesWaitUntilNextMatch() throws Exception {
+        game.configuration().initialize(); game.configuration().saveChampionship("champ","dash",2,3,70); running();
+        assertEquals(2,game.configuredAbilities().orElseThrow().settings().get("dash").uses());
+        game.configuration().saveChampionship("champ","dash",4,7,90);
+        assertEquals(2,game.configuredAbilities().orElseThrow().settings().get("dash").uses());
+        assertEquals(GameMode.ADVENTURE,a.player.getGameMode()); assertFalse(a.player.getAllowFlight());
+        assertEquals(.2f,a.player.getWalkSpeed()); assertTrue(game.configuredAbilities().orElseThrow().settings().values().stream().noneMatch(v -> v.enabled()));
+        game.requestCancel("test"); paper.flush(); assertRestored();
     }
 }

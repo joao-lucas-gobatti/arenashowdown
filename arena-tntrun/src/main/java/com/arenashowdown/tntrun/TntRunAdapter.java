@@ -6,6 +6,8 @@ import com.arenashowdown.api.model.*;
 import com.arenashowdown.tntrun.arena.*;
 import com.arenashowdown.tntrun.game.*;
 import com.arenashowdown.tntrun.persistence.*;
+import com.arenashowdown.tntrun.configuration.*;
+import com.arenashowdown.tntrun.ability.AbilityConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -26,6 +28,8 @@ public final class TntRunAdapter implements MinigameAdapter {
     private final BlockJournal blocks;
     private final PlayerSnapshots snapshots;
     private final ResultOutbox outbox;
+    private final PluginConfiguration configuration;
+    private PluginConfiguration.MatchSettings settings;
     private final Map<UUID,String> teams = new HashMap<>();
     private final Set<UUID> participants = new LinkedHashSet<>(), viewers = new HashSet<>();
     private final RemovalQueue<BlockJournal.Cell> removals = new RemovalQueue<>();
@@ -43,7 +47,12 @@ public final class TntRunAdapter implements MinigameAdapter {
 
     public TntRunAdapter(Plugin plugin, OrchestrationApi api, ArenaStore arenas,
                          BlockJournal blocks, PlayerSnapshots snapshots, ResultOutbox outbox) {
+        this(plugin,api,arenas,blocks,snapshots,outbox,new PluginConfiguration(plugin.getDataFolder().toPath(),arenas));
+    }
+    public TntRunAdapter(Plugin plugin, OrchestrationApi api, ArenaStore arenas,
+                         BlockJournal blocks, PlayerSnapshots snapshots, ResultOutbox outbox,PluginConfiguration configuration) {
         this.plugin=plugin; this.api=api; this.arenas=arenas; this.blocks=blocks; this.snapshots=snapshots; this.outbox=outbox;
+        this.configuration=configuration;
         session=plugin.getDataFolder().toPath().resolve("recovery/session.txt");
     }
     @Override public String id() { return "tntrun"; }
@@ -52,14 +61,18 @@ public final class TntRunAdapter implements MinigameAdapter {
         return match == null && !blocks.pending() && !outbox.pending() && !Files.exists(session) && interruptedMatch == null && arenas.get(id).isPresent();
     }
     public boolean busy() { return match != null || blocks.pending() || outbox.pending() || Files.exists(session) || interruptedMatch != null; }
+    public boolean hasActiveMatch() { return match!=null; }
     public String status() { return match == null ? (busy() ? "RECOVERY_PENDING" : "IDLE") : match.id()+" / "+phase; }
+    public PluginConfiguration configuration() { return configuration; }
+    public Optional<AbilityConfig> configuredAbilities() { return Optional.ofNullable(settings).map(PluginConfiguration.MatchSettings::abilities); }
+    private Messages messages() { return settings==null ? configuration.current().messages() : settings.messages(); }
     @Override public void prepare(MinigameContext context) {
         mainThread();
         if (busy()) throw new IllegalStateException("ArenaTNTRun busy/recovery pending; only one match at a time");
         match = context.match(); phase = Phase.PREPARING; long token = ++generation;
         try {
             if (!"tntrun".equals(match.minigame()) || match.state() != MatchState.PREPARING) throw new IllegalArgumentException("Invalid TNT Run context");
-            arena = arenas.get(match.arena()).orElseThrow(() -> new IllegalArgumentException("Unknown arena: " + match.arena()));
+            settings=configuration.capture(match.arena(),match.championshipId()); arena=settings.arena();
             World world = Objects.requireNonNull(Bukkit.getWorld(arena.world()),"Arena world not loaded");
             if (arena.bounds().minY() < world.getMinHeight() || arena.bounds().maxY() >= world.getMaxHeight()) throw new IllegalArgumentException("Bounds outside world height");
             round = new SurvivalRound(match.participants()); participants.addAll(match.participants());
@@ -141,12 +154,8 @@ public final class TntRunAdapter implements MinigameAdapter {
             w.getBlockAt(c.x(),c.y(),c.z()).setType(Material.AIR,false);
         }
         if (round.complete(arena.timeoutSeconds()*20L)) { complete(); return; }
-        if (round.tick() % 10 == 0) {
-            allPlayers(p -> {
-                if (viewers.contains(p.getUniqueId()) || !round.alive(p.getUniqueId())) containSpectator(p);
-                updateBoard(p);
-            });
-        }
+        if (round.tick() % 10 == 0) allPlayers(p -> { if (viewers.contains(p.getUniqueId()) || !round.alive(p.getUniqueId())) containSpectator(p); });
+        if (settings.scoreboard().enabled() && round.tick()%settings.scoreboard().updateTicks()==0) allPlayers(this::updateBoard);
     }
     private void eliminate(UUID id) {
         if (!round.eliminate(id)) return;
@@ -170,7 +179,7 @@ public final class TntRunAdapter implements MinigameAdapter {
         outbox.save(result); // Persist delivery intent BEFORE cleanup or calling Core.
         String winner = entries.stream().filter(ResultEntry::winner).map(e -> {
             Player p = Bukkit.getPlayer(e.playerId()); return p == null ? e.playerId().toString() : p.getName();
-        }).findFirst().orElse(plugin.getConfig().getString("messages.no-winner","Nenhum"));
+        }).findFirst().orElse(messages().text("no-winner"));
         announce("finished",Map.of("winner",winner));
         cleanup();
         deliverResult();
@@ -201,7 +210,8 @@ public final class TntRunAdapter implements MinigameAdapter {
         return arena != null && location.getWorld().getName().equals(arena.world()) && arena.bounds().contains(location.getX(),location.getY(),location.getZ());
     }
     public boolean protectedLocation(Location l) {
-        return arenas.all().stream().anyMatch(a -> a.world().equals(l.getWorld().getName()) && a.bounds().contains(l.getX(),l.getY(),l.getZ()));
+        Collection<TntArena> protectedArenas=settings==null ? arenas.all() : settings.protectedArenas();
+        return protectedArenas.stream().anyMatch(a -> a.world().equals(l.getWorld().getName()) && a.bounds().contains(l.getX(),l.getY(),l.getZ()));
     }
     public boolean allowTeleport(UUID id, Location to) {
         if (restoring || internalMove) return true;
@@ -245,10 +255,10 @@ public final class TntRunAdapter implements MinigameAdapter {
             try {
                 if (!recover(p)) throw new IllegalStateException("Player recovery pending");
                 snapshots.capture(p); normalize(p); p.setGameMode(GameMode.SPECTATOR); teleport(p,arena.spectator());
-            } catch (Exception e) { plugin.getLogger().severe("Spectator reconnect failed: "+e); p.kick(Component.text("Recuperação pendente.")); }
+            } catch (Exception e) { plugin.getLogger().severe("Spectator reconnect failed: "+e); p.kick(Component.text(messages().text("recovery-failed"))); }
             return;
         }
-        if (!recover(p)) p.kick(Component.text(plugin.getConfig().getString("messages.recovery-failed","Recuperação pendente; contate um administrador.")));
+        if (!recover(p)) p.kick(Component.text(messages().text("recovery-failed")));
     }
     public void requestCancel(String reason) {
         if (match != null) fail(reason);
@@ -273,11 +283,11 @@ public final class TntRunAdapter implements MinigameAdapter {
         generation++; stopTask(); restoring=true;
         try {
             Set<UUID> ids = new HashSet<>(participants); ids.addAll(viewers);
-            for (UUID id : ids) { Player p=Bukkit.getPlayer(id); if (p != null && !recover(p)) p.kick(Component.text("TNT Run: recuperação pendente.")); }
+            for (UUID id : ids) { Player p=Bukkit.getPlayer(id); if (p != null && !recover(p)) p.kick(Component.text(messages().text("recovery-failed"))); }
             try { if (!blocks.restore()) plugin.getLogger().severe("Block recovery pending: world unavailable"); }
             catch (Exception e) { plugin.getLogger().severe("Block recovery retained: "+e); }
         } finally {
-            restoring=false; match=null; arena=null; phase=null; round=null; participants.clear(); viewers.clear(); teams.clear(); removals.clear(); startRequested=false;
+            restoring=false; match=null; arena=null; settings=null; phase=null; round=null; participants.clear(); viewers.clear(); teams.clear(); removals.clear(); startRequested=false;
         }
     }
     /** Startup and administrator recovery. Does not resume an interrupted game. */
@@ -323,18 +333,18 @@ public final class TntRunAdapter implements MinigameAdapter {
         p.setFireTicks(0); p.setFreezeTicks(0); p.setFallDistance(0); p.setVelocity(new org.bukkit.util.Vector());
         p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType()));
         p.setAbsorptionAmount(0); p.setSprinting(false); p.setSneaking(false); p.setSwimming(false); p.setGliding(false);
-        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        if (settings.scoreboard().enabled()) p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         updateBoard(p);
     }
     private void updateBoard(Player p) {
-        if (arena == null) return;
+        if (arena == null || !settings.scoreboard().enabled()) return;
         Scoreboard b = p.getScoreboard(); Objective o = b.getObjective("tntrun");
-        if (o == null) { o=b.registerNewObjective("tntrun",Criteria.DUMMY,Component.text(plugin.getConfig().getString("scoreboard.title","TNT RUN"))); o.setDisplaySlot(DisplaySlot.SIDEBAR); }
+        if (o == null) { o=b.registerNewObjective("tntrun",Criteria.DUMMY,Component.text(settings.scoreboard().title())); o.setDisplaySlot(DisplaySlot.SIDEBAR); }
         for (String entry : new HashSet<>(b.getEntries())) b.resetScores(entry);
         Map<String,String> vars = Map.of("arena",arena.id(),"alive",String.valueOf(round == null ? participants.size() : round.aliveCount()),
             "seconds",String.valueOf(Math.max(0,arena.timeoutSeconds()-(round == null ? 0 : round.tick()/20))),
             "state",String.valueOf(phase),"removed",String.valueOf(removals.removedCount()));
-        List<String> lines=plugin.getConfig().getStringList("scoreboard.lines"); int score=lines.size();
+        List<String> lines=settings.scoreboard().lines(); int score=lines.size();
         for (String line : lines) o.getScore(expand(line,vars)+ChatColor.values()[score % 16]).setScore(score--);
     }
     private void teleport(Player p,TntArena.Point point) {
@@ -345,7 +355,7 @@ public final class TntRunAdapter implements MinigameAdapter {
         } finally { internalMove=false; }
     }
     private void announce(String key,Map<String,String> vars) {
-        String text=expand(plugin.getConfig().getString("messages."+key,key),vars); allPlayers(p -> p.sendMessage(Component.text(text)));
+        String text=messages().format(key,vars); allPlayers(p -> p.sendMessage(Component.text(text)));
     }
     private static String expand(String text,Map<String,String> vars) { for (var e : vars.entrySet()) text=text.replace("{"+e.getKey()+"}",e.getValue()); return text; }
     private void allPlayers(Consumer<Player> action) { Set<UUID> ids=new HashSet<>(participants); ids.addAll(viewers); ids.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).forEach(action); }

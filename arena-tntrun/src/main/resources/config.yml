@@ -1,20 +1,6 @@
-# Contagem fixa de cinco segundos. Tempos de piso/partida são definidos por arena.
-messages:
-  countdown: 'TNT Run começa em {seconds} segundos!'
-  start: 'Corra! O chão desaparecerá sob seus pés.'
-  eliminated: '{player} foi eliminado. Restam {alive}.'
-  finished: 'TNT Run encerrado. Vencedor: {winner}.'
-  no-winner: 'Ninguém (queda simultânea)'
-  cancelled: 'TNT Run cancelado: {reason}'
-  recovery-failed: 'Sua recuperação está pendente. Contate um administrador.'
-  no-permission: 'Você não tem permissão.'
-  saved: 'Arena validada e salva: {arena}'
-  error: 'TNT Run: {reason}'
+# Regras de partida ficam em arenas/<id>.yml; textos em messages.yml.
+# Toda configuração é capturada ao preparar a partida. Reload vale para partidas futuras.
+# Contagem fixa de cinco segundos: parte das regras do TNT Run básico.
 scoreboard:
-  title: 'ARENA • TNT RUN'
-  lines:
-    - 'Arena: {arena}'
-    - 'Vivos: {alive}'
-    - 'Tempo restante: {seconds}s'
-    - 'Estado: {state}'
-    - 'Blocos removidos: {removed}'
+  enabled: true
+  update-ticks: 10

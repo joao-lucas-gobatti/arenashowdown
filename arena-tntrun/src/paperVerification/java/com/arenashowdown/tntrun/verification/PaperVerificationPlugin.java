@@ -3,6 +3,7 @@ package com.arenashowdown.tntrun.verification;
 import com.arenashowdown.api.OrchestrationApi;
 import com.arenashowdown.tntrun.arena.*;
 import com.arenashowdown.tntrun.persistence.*;
+import com.arenashowdown.tntrun.configuration.PluginConfiguration;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -28,8 +29,8 @@ public final class PaperVerificationPlugin extends JavaPlugin {
                 World world=Objects.requireNonNull(Bukkit.getWorld("tntrun_test"));
                 if (!getDataFolder().toPath().startsWith(root) && !getDataFolder().toPath().toAbsolutePath().startsWith(root)) throw new IllegalStateException("Non-isolated plugin folder");
                 require(Bukkit.getServicesManager().load(OrchestrationApi.class)!=null,"OrchestrationApi missing");
-                verifyBlocks(world); verifyPlayer(world);
-                Files.writeString(getDataFolder().toPath().resolve("verification.ok"),"Paper 1.21.11: blocks, atomic recovery, binary inventory, potion effects, scoreboard, player states OK\n");
+                verifyBlocks(world); verifyPlayer(world); verifyConfiguration();
+                Files.writeString(getDataFolder().toPath().resolve("verification.ok"),"Paper 1.21.11: blocks, recovery, inventory, player states, messages.yml and transactional reload OK\n");
                 getLogger().info("TNTRUN_PAPER_VERIFICATION_OK"); sender.sendMessage(Component.text("TNTRUN_PAPER_VERIFICATION_OK"));
             } catch (Exception e) { getLogger().log(java.util.logging.Level.SEVERE,"TNTRUN_PAPER_VERIFICATION_FAILED",e); }
             return true;
@@ -48,6 +49,23 @@ public final class PaperVerificationPlugin extends JavaPlugin {
         require(new BlockJournal(dir).restore(),"Block recovery failed");
         require(world.getBlockAt(3,75,3).getType()==Material.SAND && world.getBlockAt(3,74,3).getType()==Material.TNT,"Original floors not restored");
         require(!journal.pending(),"Block journal not consumed");
+    }
+    private void verifyConfiguration() throws Exception {
+        Path folder=getDataFolder().toPath().resolve("configuration-test").resolve(UUID.randomUUID().toString());
+        ArenaStore store=new ArenaStore(folder.resolve("arenas"));
+        try (var in=Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ArenaTNTRun")).getResource("arena.example.yml")) {
+            var arena=new org.bukkit.configuration.file.YamlConfiguration(); arena.loadFromString(new String(Objects.requireNonNull(in).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8)); store.save(arena);
+        }
+        PluginConfiguration config=new PluginConfiguration(folder,store); config.initialize(); var captured=config.capture("teste","cup");
+        var arena=ArenaStore.read(folder.resolve("arenas/teste.yml")); arena.set("timeout-seconds",5); Files.writeString(folder.resolve("arenas/teste.yml"),arena.saveToString());
+        var messages=ArenaStore.read(folder.resolve("messages.yml")); messages.set("start","Paper reload text"); Files.writeString(folder.resolve("messages.yml"),messages.saveToString());
+        var before=config.current(); config.validate(); require(config.current()==before,"validate changed live settings"); config.reload();
+        require(captured.arena().timeoutSeconds()==180 && config.capture("teste","cup").arena().timeoutSeconds()==5,"Reload modified previous match rules");
+        require(!captured.messages().text("start").equals("Paper reload text") && config.current().messages().text("start").equals("Paper reload text"),"Message snapshot/reload mismatch");
+        config.saveChampionship("cup","dash",3,2.5,80); require(config.capture("teste","cup").abilities().settings().get("dash").uses()==3,"Championship configuration missing");
+        before=config.current(); Files.writeString(folder.resolve("championships/cup.yml"),"id: cup\nabilities:\n  dash: {enabled: true}\n");
+        boolean rejected=false; try { config.reload(); } catch (IllegalArgumentException expected) { rejected=true; }
+        require(rejected && config.current()==before,"Unavailable ability must fail without partial reload");
     }
     private void verifyPlayer(World world) throws Exception {
         TestPlayer fake=new TestPlayer(world); Player p=fake.player; Path dir=getDataFolder().toPath().resolve("player-test");
