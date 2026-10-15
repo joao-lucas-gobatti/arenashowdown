@@ -1,13 +1,17 @@
-[22:13:51] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.7+6-LTS; Microsoft Microsoft-11369940) on Windows 11 10.0 (amd64)
-[22:13:51] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
-[22:14:00] [Server thread/INFO]: [ArenaTNTRun] ArenaTNTRun registered as tntrun; arenas=1
-[22:14:12] [Server thread/INFO]: [ArenaTNTRunVerification] TNTRUN_PAPER_VERIFICATION_OK
-[22:14:12] [Server thread/INFO]: TNTRUN_PAPER_VERIFICATION_OK
-[22:14:12] [Server thread/INFO]: Arenas: teste
-[22:14:12] [Server thread/INFO]: YAML válido: teste; mundo carregado=true
-[22:14:12] [Server thread/INFO]: IDLE
-[22:14:12] [Server thread/INFO]: Stopping the server
-[22:14:12] [Server thread/INFO]: [ArenaTNTRunVerification] Disabling ArenaTNTRunVerification v0.1.0-SNAPSHOT
-[22:14:12] [Server thread/INFO]: [ArenaTNTRun] Disabling ArenaTNTRun v0.1.0-SNAPSHOT
-[22:14:12] [Server thread/INFO]: Waiting for all RegionFile I/O tasks to complete...
-[22:14:12] [Server thread/INFO]: All RegionFile I/O tasks to complete
+﻿[22:29:12] [ServerMain/INFO]: [bootstrap] Running Java 21 (OpenJDK 64-Bit Server VM 21.0.7+6-LTS; Microsoft Microsoft-11369940) on Windows 11 10.0 (amd64)
+[22:29:12] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.11-132-ver/1.21.11@c5eb079 (2026-05-11T11:43:09Z) for Minecraft 1.21.11
+[22:29:21] [Server thread/INFO]: [ArenaTNTRun] ArenaTNTRun registered as tntrun; arenas=1
+[22:29:35] [Server thread/INFO]: [ArenaTNTRunVerification] TNTRUN_PAPER_VERIFICATION_OK
+[22:29:35] [Server thread/INFO]: TNTRUN_PAPER_VERIFICATION_OK
+[22:29:35] [Server thread/INFO]: Todos os YAML são válidos; nenhuma configuração foi aplicada.
+[22:29:35] [Server thread/INFO]: Configuração validada e recarregada. Regras e mensagens valem para novas partidas.
+[22:29:35] [Server thread/INFO]: Arenas: teste
+[22:29:35] [Server thread/INFO]: YAML válido: teste; mundo carregado=true
+[22:29:35] [Server thread/INFO]: Parâmetros futuros salvos para smoke. Habilidades continuam indisponíveis nesta etapa.
+[22:29:35] [Server thread/INFO]: Todos os YAML são válidos; nenhuma configuração foi aplicada.
+[22:29:35] [Server thread/INFO]: Estado: IDLE
+[22:29:35] [Server thread/INFO]: Stopping the server
+[22:29:35] [Server thread/INFO]: [ArenaTNTRunVerification] Disabling ArenaTNTRunVerification v0.1.0-SNAPSHOT
+[22:29:35] [Server thread/INFO]: [ArenaTNTRun] Disabling ArenaTNTRun v0.1.0-SNAPSHOT
+[22:29:35] [Server thread/INFO]: Waiting for all RegionFile I/O tasks to complete...
+[22:29:35] [Server thread/INFO]: All RegionFile I/O tasks to complete

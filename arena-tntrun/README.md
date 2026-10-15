@@ -27,7 +27,7 @@ O JAR usa a API carregada pelo ArenaCore; não inclui cópias da ArenaAPI.
 
 1. Pare o servidor de testes. Use Paper 1.21.11 e Java 21, com ArenaCore instalado.
 2. Coloque somente `ArenaTNTRun-0.1.0-SNAPSHOT.jar` em `plugins/`.
-3. Inicie uma vez para gerar `plugins/ArenaTNTRun/config.yml` e a pasta `arenas/`.
+3. Inicie uma vez para gerar `plugins/ArenaTNTRun/config.yml`, `messages.yml` e as pastas `arenas/` e `championships/`.
 4. Configure uma arena em um **mundo de testes próprio**, já construído. O plugin não cria
    mundos nem constrói mapas. O exemplo `src/main/resources/arena.example.yml` não é ativado automaticamente.
 5. Copie/adapte o exemplo para `plugins/ArenaTNTRun/arenas/teste.yml` e execute `/tntrun reload`.
@@ -63,6 +63,11 @@ essa tentativa cancela e restaura a partida.
 
 ## Configuração e comandos
 
+O administrador altera apenas YAML e usa os comandos abaixo; não precisa editar Java ou recompilar.
+`config.yml` contém opções técnicas do scoreboard (`enabled` e `update-ticks`). Todos os textos de
+partida e respostas normais dos comandos, inclusive título/linhas do scoreboard, ficam em `messages.yml`.
+As regras físicas/temporais ficam em `arenas/<id>.yml`.
+
 Cada arena define mundo, cubo de proteção, camadas, spawns, ponto de espectador, limite de queda,
 timeout, atraso de remoção e materiais. As camadas são ordenadas pela altura, de cima para baixo.
 `depth: 2` remove a superfície e o suporte correspondente (por exemplo, areia e TNT).
@@ -85,18 +90,69 @@ com espaço para corpo e cabeça. Mínimo de dois jogadores; um spawn por jogado
 | `/tntrun spectator <id>` | Definir posição de espectador dentro do cubo |
 | `/tntrun rules <id> <timeout-seconds> <delay-ticks> <elimination-y>` | Definir regras |
 | `/tntrun materials <id> <SAND,TNT,...>` | Definir materiais de piso |
+| `/tntrun ability <arena> <dash\|double-jump> <uses> <strength> <cooldown-ticks>` | Preparar parâmetros futuros no rascunho da arena |
+| `/tntrun championship <id> <dash\|double-jump> <uses> <strength> <cooldown-ticks>` | Validar/salvar parâmetros futuros do campeonato |
 | `/tntrun save <id>` | Validar e ativar rascunho; não altera blocos |
-| `/tntrun reload`, `/tntrun validate <id>` | Recarregar/validar YAML |
+| `/tntrun reload`, `/tntrun validate [id]` | Recarregar todos os YAML ou validar sem aplicar; id valida arena/rascunho |
 | `/tntrun cancel [motivo]`, `/tntrun recover` | Cancelar ou tentar recuperação/reenvio |
 | `/tntrun spectate`, `/tntrun leave` | Assistir/sair; participante abandona e vira espectador |
 
-Rascunhos `.draft` são persistentes e não são carregados como arenas. Edições exigem que não exista
-partida nem recuperação de blocos/resultados pendente. Reload inválido preserva a configuração validada
-anterior. Arenas sobrepostas são recusadas. A validação YAML não substitui a inspeção física na preparação.
+Rascunhos `.draft` são persistentes e não são carregados como arenas. Uma partida ativa permite edição,
+save e reload para as próximas partidas. Recuperação de blocos/resultados pendente exige recuperação
+antes de editar. Arenas sobrepostas são recusadas. A validação YAML não substitui a inspeção física na preparação.
+
+O reload lê e valida config, mensagens, arenas e perfis de campeonatos **antes de publicar qualquer parte**.
+YAML inválido, valor fora do limite, chave desconhecida ou habilidade indisponível preserva toda a
+configuração validada anterior. `/tntrun validate` verifica os arquivos em disco sem aplicá-los.
+Na preparação, a partida captura regras, textos, scoreboard, proteção e parâmetros futuros em objetos
+imutáveis, antes de carregar equipes. Alterações posteriores só valem para novas partidas; mover/remover
+a definição YAML não retira a proteção da arena em uso.
+
+Na primeira inicialização da atualização, se `messages.yml` ainda não existir, textos conhecidos de
+`config.yml/messages` e os rótulos antigos do scoreboard são migrados para ele. O arquivo `config.yml`
+existente fica intacto. Depois disso, alterações de texto devem ser feitas em `messages.yml`.
 
 Permissões: `arenatntrun.admin` (padrão op), `arenatntrun.spectate` e `arenatntrun.leave` (padrão true).
-Scoreboard e mensagens da partida são configuráveis em `config.yml`, com placeholders no exemplo.
 Textos são tratados literalmente, sem interpretar comandos ou MiniMessage.
+
+## Preparação para habilidades opcionais
+
+O TNT Run básico desta etapa não executa dash, pulo duplo ou qualquer outra habilidade.
+O pacote interno `ability` contém apenas parâmetros e validação, sem listeners, impulsos, consumo de
+usos ou cooldown em execução. Não houve mudança de API compartilhada.
+
+Os ids reservados são `dash` e `double-jump`. Usos, força e cooldown são independentes para cada um:
+
+```yaml
+abilities:
+  dash: {enabled: false, uses: 2, strength: 1.5, cooldown-ticks: 60}
+  double-jump: {enabled: false, uses: 1, strength: 1.0, cooldown-ticks: 80}
+```
+
+Essa seção pode ficar no YAML da arena. Em `championships/copa-tnt.yml`, use:
+
+```yaml
+id: copa-tnt
+abilities:
+  dash: {uses: 3, cooldown-ticks: 100}
+```
+
+O id coincide com o campeonato no Core e com o nome do arquivo. A herança é defaults internos → arena
+→ campeonato, por campo; no exemplo, a força do dash e todos os parâmetros do pulo duplo vêm da arena.
+Usos: 0–100; força finita maior que zero e até 10; cooldown: 0–72.000 ticks. `enabled: true` é recusado
+explicitamente nesta etapa para não prometer uma habilidade ausente. Configure os parâmetros agora
+e mantenha `enabled: false`. Os exemplos `arena.example.yml` e `championship.example.yml` acompanham o JAR.
+
+```text
+tntrun ability teste dash 2 1.5 60
+tntrun save teste
+tntrun championship copa-tnt double-jump 1 1.2 80
+tntrun validate
+tntrun reload
+```
+
+`ability` atualiza o rascunho; `championship` valida e salva o perfil diretamente. São configurações para
+partidas futuras e não habilitam habilidades. A implementação dessas ações pertence a uma etapa posterior.
 
 ## Regras de partida e proteção
 

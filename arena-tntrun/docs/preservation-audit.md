@@ -2,6 +2,8 @@
 
 Pasta: `C:\Users\Rafael\arenashowdown`. Branch inicial e final: `dev/rafael`.
 HEAD de referência antes desta reconstrução: `ff3b381`.
+HEAD antes do requisito adicional de configuração/reload: `cfc59af` (registro local em
+`.work/additional-initial-head.txt`; status em `.work/additional-initial-status.txt`).
 Não foi encontrado `AGENTS.md` na árvore do repositório nem nos diretórios ancestrais consultados.
 
 O status original completo, com os arquivos não rastreados expandidos, está em
