@@ -24,13 +24,13 @@ public final class BlockJournal {
                 for (int by = layer.topY() - layer.depth() + 1; by <= layer.topY(); by++) {
                     var block = world.getBlockAt(x, by, z);
                     if (block.getState() instanceof TileState) throw new IllegalArgumentException("Tile entity in floor: " + x + "," + by + "," + z);
-                    if (!block.getType().isAir() && !arena.materials().contains(block.getType().name()))
+                    if (!block.isEmpty() && !arena.materials().contains(block.getType().name()))
                         throw new IllegalArgumentException("Floor material not allowed: " + block.getType());
                     cells.add(x + "," + by + "," + z + "|" + block.getBlockData().getAsString());
                 }
         }
         for (TntArena.Point p : arena.spawns())
-            if (world.getBlockAt((int)Math.floor(p.x()),(int)Math.floor(p.y())-1,(int)Math.floor(p.z())).getType().isAir()
+            if (world.getBlockAt((int)Math.floor(p.x()),(int)Math.floor(p.y())-1,(int)Math.floor(p.z())).isEmpty()
                     || !world.getBlockAt((int)Math.floor(p.x()),(int)Math.floor(p.y()),(int)Math.floor(p.z())).isPassable()
                     || !world.getBlockAt((int)Math.floor(p.x()),(int)Math.floor(p.y())+1,(int)Math.floor(p.z())).isPassable())
                 throw new IllegalArgumentException("Unsafe spawn " + p);

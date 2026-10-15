@@ -37,6 +37,7 @@ public final class PlayerSnapshots {
         y.set("fire",p.getFireTicks()); y.set("freeze",p.getFreezeTicks()); y.set("fall",p.getFallDistance());
         y.set("velocity",List.of(p.getVelocity().getX(),p.getVelocity().getY(),p.getVelocity().getZ()));
         y.set("inventory",Arrays.stream(p.getInventory().getContents()).map(i -> i == null ? "_" : Base64.getEncoder().encodeToString(i.serializeAsBytes())).toList());
+        ItemStack cursor=p.getItemOnCursor(); y.set("cursor",cursor == null ? "_" : Base64.getEncoder().encodeToString(cursor.serializeAsBytes()));
         y.set("held-slot",p.getInventory().getHeldItemSlot());
         List<String> effects = p.getActivePotionEffects().stream().map(e -> e.getType().getKey()+","+e.getDuration()+","+e.getAmplifier()+","+e.isAmbient()+","+e.hasParticles()+","+e.hasIcon()).toList();
         y.set("effects",effects);
@@ -59,6 +60,8 @@ public final class PlayerSnapshots {
         if (w == null) return false;
         GameMode mode = GameMode.valueOf(y.getString("mode"));
         ItemStack[] inventory = y.getStringList("inventory").stream().map(s -> s.equals("_") ? null : ItemStack.deserializeBytes(Base64.getDecoder().decode(s))).toArray(ItemStack[]::new);
+        String storedCursor=Objects.requireNonNull(y.getString("cursor"),"Missing cursor snapshot");
+        ItemStack cursor=storedCursor.equals("_") ? null : ItemStack.deserializeBytes(Base64.getDecoder().decode(storedCursor));
         List<PotionEffect> effects = new ArrayList<>();
         for (String s : y.getStringList("effects")) {
             String[] v = s.split(","); if (v.length != 6) throw new IllegalStateException("Corrupt potion snapshot");
@@ -71,7 +74,7 @@ public final class PlayerSnapshots {
         if (board == null) board = loadBoard(y);
         if (!p.teleport(new Location(w,y.getDouble("x"),y.getDouble("y"),y.getDouble("z"),(float)y.getDouble("yaw"),(float)y.getDouble("pitch"))))
             return false;
-        p.setGameMode(mode); p.getInventory().setContents(inventory); p.getInventory().setHeldItemSlot(y.getInt("held-slot"));
+        p.closeInventory(); p.setGameMode(mode); p.getInventory().setContents(inventory); p.getInventory().setHeldItemSlot(y.getInt("held-slot")); p.setItemOnCursor(cursor);
         p.setHealth(Math.min(y.getDouble("health"),p.getMaxHealth())); p.setFoodLevel(y.getInt("food"));
         p.setSaturation((float)y.getDouble("saturation")); p.setExhaustion((float)y.getDouble("exhaustion"));
         p.setLevel(y.getInt("level")); p.setExp((float)y.getDouble("exp")); p.setTotalExperience(y.getInt("total-exp"));
@@ -116,7 +119,7 @@ public final class PlayerSnapshots {
             var s = objectives.getConfigurationSection(key);
             Objective o = board.registerNewObjective(s.getString("name"),Criteria.create(s.getString("criteria")),component(s.getString("title")),RenderType.valueOf(s.getString("render")));
             if (s.getString("slot") != null) o.setDisplaySlot(DisplaySlot.valueOf(s.getString("slot")));
-            var scores = s.getConfigurationSection("scores"); if (scores != null) for (String k : scores.getKeys(false)) o.getScore(scores.getString(k+".entry")).setScore(scores.getInt(k+".value"));
+            var scores = s.getConfigurationSection("scores"); if (scores != null && o.isModifiable()) for (String k : scores.getKeys(false)) o.getScore(scores.getString(k+".entry")).setScore(scores.getInt(k+".value"));
         }
         var teams = y.getConfigurationSection("board.teams");
         if (teams != null) for (String key : teams.getKeys(false)) {

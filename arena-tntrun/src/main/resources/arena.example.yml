@@ -1,0 +1,17 @@
+# Copie para plugins/ArenaTNTRun/arenas/teste.yml SOMENTE no servidor isolado.
+# Este exemplo não cria mundo nem constrói/edita mapas.
+id: teste
+world: tntrun_test
+bounds: {min-x: 0, min-y: 50, min-z: 0, max-x: 15, max-y: 85, max-z: 15}
+layers:
+  0: {min-x: 1, max-x: 14, min-z: 1, max-z: 14, top-y: 75, depth: 2}
+  1: {min-x: 1, max-x: 14, min-z: 1, max-z: 14, top-y: 65, depth: 2}
+  2: {min-x: 1, max-x: 14, min-z: 1, max-z: 14, top-y: 55, depth: 2}
+spawns:
+  0: {x: 3.5, y: 76.0, z: 3.5, yaw: 0.0, pitch: 0.0}
+  1: {x: 11.5, y: 76.0, z: 11.5, yaw: 180.0, pitch: 0.0}
+spectator: {x: 8.0, y: 82.0, z: 8.0, yaw: 0.0, pitch: 45.0}
+elimination-y: 52.0
+timeout-seconds: 180
+removal-delay-ticks: 8
+materials: [SAND, TNT]
