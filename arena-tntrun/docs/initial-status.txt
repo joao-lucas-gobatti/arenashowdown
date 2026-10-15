@@ -1,0 +1,79 @@
+ M .gradle/9.2.1/checksums/checksums.lock
+ M .gradle/9.2.1/checksums/md5-checksums.bin
+ M .gradle/9.2.1/checksums/sha1-checksums.bin
+ M .gradle/9.2.1/executionHistory/executionHistory.bin
+ M .gradle/9.2.1/executionHistory/executionHistory.lock
+ M .gradle/9.2.1/fileHashes/fileHashes.bin
+ M .gradle/9.2.1/fileHashes/fileHashes.lock
+ M .gradle/9.2.1/fileHashes/resourceHashesCache.bin
+ M .gradle/buildOutputCleanup/buildOutputCleanup.lock
+ M .gradle/buildOutputCleanup/outputFiles.bin
+ M .gradle/file-system.probe
+ M arena-core/build/libs/ArenaCore-0.2.0-SNAPSHOT.jar
+ M arena-core/build/libs/arena-core-0.2.0-SNAPSHOT.jar
+ M arena-core/build/reports/tests/test/classes/com.arenashowdown.core.persistence.SqliteBackupServiceTest.html
+ M arena-core/build/reports/tests/test/classes/com.arenashowdown.core.service.ArenaServiceTest.html
+ M arena-core/build/reports/tests/test/classes/com.arenashowdown.core.service.OrchestrationIntegrationTest.html
+ M arena-core/build/reports/tests/test/css/base-style.css
+ M arena-core/build/reports/tests/test/css/style.css
+ M arena-core/build/reports/tests/test/index.html
+ M arena-core/build/reports/tests/test/js/report.js
+ M arena-core/build/reports/tests/test/packages/com.arenashowdown.core.persistence.html
+ M arena-core/build/reports/tests/test/packages/com.arenashowdown.core.service.html
+ M arena-core/build/test-results/test/TEST-com.arenashowdown.core.persistence.SqliteBackupServiceTest.xml
+ M arena-core/build/test-results/test/TEST-com.arenashowdown.core.service.ArenaServiceTest.xml
+ M arena-core/build/test-results/test/TEST-com.arenashowdown.core.service.OrchestrationIntegrationTest.xml
+ M arena-core/build/test-results/test/binary/results.bin
+ M arena-parkour/build/libs/ArenaParkour-0.3.0-SNAPSHOT.jar
+ M arena-parkour/build/libs/arena-parkour-0.3.0-SNAPSHOT.jar
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.arena.ParkourArenaTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.palace.PalaceGeometryTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.palace.PalacePreviewTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.player.PersistentSnapshotStoreFileTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.race.RaceTrackerTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.wonder.WonderFullArchitectureTest.html
+ M arena-parkour/build/reports/tests/test/classes/com.arenashowdown.parkour.wonder.WonderPrototypeTest.html
+ M arena-parkour/build/reports/tests/test/css/base-style.css
+ M arena-parkour/build/reports/tests/test/css/style.css
+ M arena-parkour/build/reports/tests/test/index.html
+ M arena-parkour/build/reports/tests/test/js/report.js
+ M arena-parkour/build/reports/tests/test/packages/com.arenashowdown.parkour.arena.html
+ M arena-parkour/build/reports/tests/test/packages/com.arenashowdown.parkour.palace.html
+ M arena-parkour/build/reports/tests/test/packages/com.arenashowdown.parkour.player.html
+ M arena-parkour/build/reports/tests/test/packages/com.arenashowdown.parkour.race.html
+ M arena-parkour/build/reports/tests/test/packages/com.arenashowdown.parkour.wonder.html
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.arena.ParkourArenaTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.palace.PalaceGeometryTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.palace.PalacePreviewTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.player.PersistentSnapshotStoreFileTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.race.RaceTrackerTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.wonder.WonderFullArchitectureTest.xml
+ M arena-parkour/build/test-results/test/TEST-com.arenashowdown.parkour.wonder.WonderPrototypeTest.xml
+ M arena-parkour/build/test-results/test/binary/results.bin
+ M arena-parkour/build/tmp/compileJava/previous-compilation-data.bin
+ M build/reports/problems/problems-report.html
+?? "-files --others --exclude-standard"
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/ArenaLobbyPlugin.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/LobbyItems.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/LobbyMenu$Holder.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/LobbyMenu.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/LobbyState$View.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/LobbyState.class
+?? arena-lobby/build/classes/java/main/com/arenashowdown/lobby/VisualManager.class
+?? arena-lobby/build/classes/java/test/com/arenashowdown/lobby/LobbyStateTest.class
+?? arena-lobby/build/libs/ArenaLobby-0.4.1-SNAPSHOT.jar
+?? arena-lobby/build/reports/tests/test/classes/com.arenashowdown.lobby.LobbyStateTest.html
+?? arena-lobby/build/reports/tests/test/css/base-style.css
+?? arena-lobby/build/reports/tests/test/css/style.css
+?? arena-lobby/build/reports/tests/test/index.html
+?? arena-lobby/build/reports/tests/test/js/report.js
+?? arena-lobby/build/reports/tests/test/packages/com.arenashowdown.lobby.html
+?? arena-lobby/build/resources/main/config.yml
+?? arena-lobby/build/resources/main/plugin.yml
+?? arena-lobby/build/test-results/test/TEST-com.arenashowdown.lobby.LobbyStateTest.xml
+?? arena-lobby/build/test-results/test/binary/output.bin
+?? arena-lobby/build/test-results/test/binary/output.bin.idx
+?? arena-lobby/build/test-results/test/binary/results.bin
+?? arena-lobby/build/tmp/compileJava/previous-compilation-data.bin
+?? arena-lobby/build/tmp/compileTestJava/previous-compilation-data.bin
+?? arena-lobby/build/tmp/jar/MANIFEST.MF

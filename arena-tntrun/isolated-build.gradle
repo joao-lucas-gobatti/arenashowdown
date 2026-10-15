@@ -1,0 +1,5 @@
+// Keep tracked/pre-existing root and API build outputs untouched.
+gradle.projectsLoaded {
+    rootProject.layout.buildDirectory.set(rootProject.file('arena-tntrun/.work/root-build'))
+    rootProject.project(':arena-api').layout.buildDirectory.set(rootProject.file('arena-tntrun/.work/api-build'))
+}
