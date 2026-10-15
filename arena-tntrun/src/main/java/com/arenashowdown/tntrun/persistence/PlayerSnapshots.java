@@ -50,13 +50,11 @@ public final class PlayerSnapshots {
     public boolean restore(Player p) throws Exception {
         if (!pending(p.getUniqueId())) return true;
         YamlConfiguration y = ArenaStore.read(file(p.getUniqueId()));
-        if (y.getInt("schema") != 1 || !p.getUniqueId().toString().equals(y.getString("uuid"))) throw new IllegalStateException("Invalid player snapshot");
-        for (String key : List.of("x","y","z","yaw","pitch","health","absorption","food","saturation","exhaustion","level","exp","total-exp","walk-speed","fly-speed","fire","freeze","fall","held-slot"))
-            if (!(y.get(key) instanceof Number n) || !Double.isFinite(n.doubleValue())) throw new IllegalStateException("Invalid snapshot field: " + key);
+        validateNumbers(y);
+        if (!p.getUniqueId().toString().equals(y.getString("uuid"))) throw new IllegalStateException("Invalid player snapshot");
         for (String key : List.of("allow-flight","flying","collidable","invulnerable","gravity","sprinting","sneaking","swimming","gliding","board.main"))
             if (!(y.get(key) instanceof Boolean)) throw new IllegalStateException("Missing snapshot boolean: " + key);
-        if (!y.isList("inventory") || !y.isList("effects") || y.getStringList("inventory").size() != p.getInventory().getSize()
-                || y.getDouble("health") <= 0 || y.getDouble("absorption") < 0 || y.getInt("food") < 0 || y.getInt("food") > 20 || y.getInt("held-slot") < 0 || y.getInt("held-slot") > 8)
+        if (!y.isList("inventory") || !y.isList("effects") || y.getStringList("inventory").size() != p.getInventory().getSize())
             throw new IllegalStateException("Truncated snapshot");
         World w = Bukkit.getWorld(UUID.fromString(y.getString("world")));
         if (w == null) return false;
@@ -70,8 +68,10 @@ public final class PlayerSnapshots {
             PotionEffectType type = Registry.EFFECT.get(Objects.requireNonNull(NamespacedKey.fromString(v[0])));
             effects.add(new PotionEffect(Objects.requireNonNull(type),Integer.parseInt(v[1]),Integer.parseInt(v[2]),Boolean.parseBoolean(v[3]),Boolean.parseBoolean(v[4]),Boolean.parseBoolean(v[5])));
         }
-        List<Double> velocity = y.getDoubleList("velocity");
-        if (velocity.size() != 3 || velocity.stream().anyMatch(v -> !Double.isFinite(v))) throw new IllegalStateException("Corrupt velocity");
+        List<?> storedVelocity = y.getList("velocity");
+        if (storedVelocity == null || storedVelocity.size() != 3 || storedVelocity.stream().anyMatch(v -> !(v instanceof Number n) || !Double.isFinite(n.doubleValue())))
+            throw new IllegalStateException("Corrupt velocity");
+        List<Double> velocity = storedVelocity.stream().map(v -> ((Number)v).doubleValue()).toList();
         Scoreboard board = originalBoards.get(p.getUniqueId());
         if (board == null) board = loadBoard(y);
         if (!p.teleport(new Location(w,y.getDouble("x"),y.getDouble("y"),y.getDouble("z"),(float)y.getDouble("yaw"),(float)y.getDouble("pitch"))))
@@ -92,6 +92,35 @@ public final class PlayerSnapshots {
         p.setScoreboard(board);
         p.saveData(); // Durable inventory/state before consuming the recovery file.
         Files.delete(file(p.getUniqueId())); originalBoards.remove(p.getUniqueId()); return true;
+    }
+    /** Validate setter contracts before teleport, inventory replacement or any other player mutation. */
+    private static void validateNumbers(YamlConfiguration y) {
+        integer(y,"schema",1,1);
+        for (String key : List.of("x","y","z")) number(y,key);
+        for (String key : List.of("yaw","pitch","health","absorption","saturation","exhaustion","exp","walk-speed","fly-speed","fall"))
+            if (!Float.isFinite((float)number(y,key))) throw new IllegalStateException("Invalid snapshot float: " + key);
+        integer(y,"food",Integer.MIN_VALUE,Integer.MAX_VALUE);
+        integer(y,"level",0,Integer.MAX_VALUE); integer(y,"total-exp",0,Integer.MAX_VALUE);
+        integer(y,"held-slot",0,8); integer(y,"freeze",0,Integer.MAX_VALUE);
+        // Negative fire ticks are a valid Bukkit state; do not clamp captured originals.
+        integer(y,"fire",Integer.MIN_VALUE,Integer.MAX_VALUE);
+        range(y,"exp",0,1); range(y,"walk-speed",-1,1); range(y,"fly-speed",-1,1);
+        if ((float)y.getDouble("health") <= 0 || y.getDouble("absorption") < 0)
+            throw new IllegalStateException("Invalid snapshot health/absorption");
+    }
+    private static double number(YamlConfiguration y,String key) {
+        if (!(y.get(key) instanceof Number n) || !Double.isFinite(n.doubleValue()))
+            throw new IllegalStateException("Invalid snapshot field: " + key);
+        return n.doubleValue();
+    }
+    private static void integer(YamlConfiguration y,String key,int min,int max) {
+        double value=number(y,key);
+        if (value != Math.rint(value) || value < min || value > max)
+            throw new IllegalStateException("Invalid snapshot integer: " + key);
+    }
+    private static void range(YamlConfiguration y,String key,double min,double max) {
+        double value=number(y,key);
+        if (value < min || value > max) throw new IllegalStateException("Invalid snapshot range: " + key);
     }
     private static String json(net.kyori.adventure.text.Component c) { return GsonComponentSerializer.gson().serialize(c); }
     private static net.kyori.adventure.text.Component component(String s) { return GsonComponentSerializer.gson().deserialize(Objects.requireNonNull(s)); }
