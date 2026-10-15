@@ -15,3 +15,7 @@ elimination-y: 52.0
 timeout-seconds: 180
 removal-delay-ticks: 8
 materials: [SAND, TNT]
+# Apenas parâmetros reservados. enabled:true é recusado enquanto não houver implementação.
+abilities:
+  dash: {enabled: false, uses: 1, strength: 1.5, cooldown-ticks: 40}
+  double-jump: {enabled: false, uses: 1, strength: 1.0, cooldown-ticks: 40}

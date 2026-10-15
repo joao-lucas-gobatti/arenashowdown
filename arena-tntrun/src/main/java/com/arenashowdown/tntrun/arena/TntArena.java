@@ -1,10 +1,15 @@
 package com.arenashowdown.tntrun.arena;
 
+import com.arenashowdown.tntrun.ability.AbilityConfig;
 import java.util.*;
 
 public record TntArena(String id, String world, Bounds bounds, List<Layer> layers,
                        List<Point> spawns, Point spectator, double eliminationY,
-                       int timeoutSeconds, int removalDelayTicks, Set<String> materials) {
+                       int timeoutSeconds, int removalDelayTicks, Set<String> materials, AbilityConfig abilities) {
+    public TntArena(String id,String world,Bounds bounds,List<Layer> layers,List<Point> spawns,Point spectator,
+                    double eliminationY,int timeoutSeconds,int removalDelayTicks,Set<String> materials) {
+        this(id,world,bounds,layers,spawns,spectator,eliminationY,timeoutSeconds,removalDelayTicks,materials,AbilityConfig.defaults());
+    }
     public record Point(double x, double y, double z, float yaw, float pitch) {
         public Point {
             if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(z)
@@ -31,6 +36,7 @@ public record TntArena(String id, String world, Bounds bounds, List<Layer> layer
         }
     }
     public TntArena {
+        Objects.requireNonNull(abilities,"abilities");
         layers = layers.stream().sorted(Comparator.comparingInt(Layer::topY).reversed()).toList();
         spawns = List.copyOf(spawns); materials = Set.copyOf(materials);
         if (id == null || !id.matches("[a-z0-9_-]{1,48}") || world == null || world.isBlank() || bounds == null

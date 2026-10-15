@@ -1,0 +1,6 @@
+# Copie como championships/copa-tnt.yml; id deve coincidir com o campeonato no Core.
+# Campos omitidos herdam a arena. Esta etapa não executa habilidades.
+id: copa-tnt
+abilities:
+  dash: {enabled: false, uses: 2, strength: 1.8, cooldown-ticks: 60}
+  double-jump: {uses: 1, strength: 1.2, cooldown-ticks: 80}

@@ -1,6 +1,7 @@
 package com.arenashowdown.tntrun.arena;
 
 import com.arenashowdown.tntrun.persistence.AtomicFiles;
+import com.arenashowdown.tntrun.ability.AbilityConfig;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,7 +17,12 @@ public final class ArenaStore {
     public Path directory() { return directory; }
     public Optional<TntArena> get(String id) { return Optional.ofNullable(arenas.get(id)); }
     public Collection<TntArena> all() { return List.copyOf(arenas.values()); }
+    public Map<String,TntArena> snapshot() { return arenas; }
     public void reload() throws Exception {
+        publish(readDefinitions());
+    }
+    /** Read/validate without changing the live catalog; used by whole-plugin reload. */
+    public Map<String,TntArena> readDefinitions() throws Exception {
         Files.createDirectories(directory);
         Map<String, TntArena> loaded = new TreeMap<>();
         try (var files = Files.list(directory)) {
@@ -27,8 +33,9 @@ public final class ArenaStore {
             }
         }
         validateOverlap(loaded.values());
-        arenas = Map.copyOf(loaded);
+        return Map.copyOf(loaded);
     }
+    public void publish(Map<String,TntArena> validated) { arenas = Map.copyOf(validated); }
     public void save(YamlConfiguration yaml) throws Exception {
         TntArena arena = parse(yaml);
         Map<String, TntArena> updated = new TreeMap<>(arenas); updated.put(arena.id(), arena);
@@ -46,6 +53,7 @@ public final class ArenaStore {
         YamlConfiguration yaml = new YamlConfiguration(); yaml.loadFromString(Files.readString(path)); return yaml;
     }
     public static TntArena parse(YamlConfiguration y) {
+        if (y.contains("abilities") && !y.isConfigurationSection("abilities")) throw new IllegalArgumentException("abilities must be a YAML section");
         ConfigurationSection b = required(y, "bounds");
         List<TntArena.Layer> layers = new ArrayList<>();
         ConfigurationSection ls = required(y, "layers");
@@ -65,7 +73,8 @@ public final class ArenaStore {
         }
         return new TntArena(y.getString("id"), y.getString("world"),
             new TntArena.Bounds(integer(b,"min-x"),integer(b,"min-y"),integer(b,"min-z"),integer(b,"max-x"),integer(b,"max-y"),integer(b,"max-z")),
-            layers, spawns, point(required(y,"spectator")), number(y,"elimination-y"), integer(y,"timeout-seconds"), integer(y,"removal-delay-ticks"), materials);
+            layers, spawns, point(required(y,"spectator")), number(y,"elimination-y"), integer(y,"timeout-seconds"), integer(y,"removal-delay-ticks"), materials,
+            AbilityConfig.overlay(AbilityConfig.defaults(),y.getConfigurationSection("abilities")));
     }
     private static List<String> orderedKeys(ConfigurationSection s) {
         return s.getKeys(false).stream().sorted(Comparator.comparingInt(Integer::parseInt)).toList();
